@@ -3,7 +3,7 @@ job "grafana" {
   type = "service"
 
   group "grafana" {
-    
+
     task "grafana" {
       driver = "docker"
       config {
@@ -18,12 +18,12 @@ job "grafana" {
       }
 
       artifact {
-        source      = "github.com/burdandrei/nomad-monitoring/examples/grafana/provisioning"
+        source      = "github.com/xaviermerino/nomad-jobs/tree/master/grafana/provisioning"
         destination = "local/provisioning/"
       }
 
       artifact {
-        source      = "github.com/burdandrei/nomad-monitoring/examples/grafana/dashboards"
+        source      = "github.com/xaviermerino/nomad-jobs/tree/master/grafana/dashboards"
         destination = "local/dashboards/"
       }
 
