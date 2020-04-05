@@ -18,12 +18,12 @@ job "grafana" {
       }
 
       artifact {
-        source      = "github.com/xaviermerino/nomad-jobs/tree/master/grafana/provisioning"
+        source      = "github.com/xaviermerino/nomad-jobs/grafana/provisioning"
         destination = "local/provisioning/"
       }
 
       artifact {
-        source      = "github.com/xaviermerino/nomad-jobs/tree/master/grafana/dashboards"
+        source      = "github.com/xaviermerino/nomad-jobs/grafana/dashboards"
         destination = "local/dashboards/"
       }
 
