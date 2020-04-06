@@ -27,11 +27,17 @@ job "grafana" {
         destination = "local/dashboards/"
       }
 
+      template {
+        source = "local/provisioning/datasources/prometheus.yml.tpl"
+        destination = "local/provisioning/prometheus.yml"
+      }
+
       resources {
         cpu    = 1000
         memory = 256
         network {
           mbits = 10
+          mode = "host"
           port "http" {}
         }
       }

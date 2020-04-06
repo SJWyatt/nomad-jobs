@@ -18,7 +18,7 @@ datasources:
   # <int> org id. will default to orgId 1 if not specified
   orgId: 1
   # <string> url
-  url: http://prometheus.service.consul:9090
+  url: http://{{ range service "prometheus" }}{{ .Address }}:{{ .Port }}{{ end }}
   # <string> database password, if used
   password:
   # <string> database user, if used

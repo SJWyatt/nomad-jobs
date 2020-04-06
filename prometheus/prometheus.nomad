@@ -70,13 +70,15 @@ EOH
       resources {
         network {
           mbits = 10
-          port  "prometheus_ui"{}
+          port  "prometheus_ui"{
+            static = "9090"
+          }
         }
       }
 
       service {
         name = "prometheus"
-        tags = ["urlprefix-/"]
+        // tags = ["urlprefix-/"]
         port = "prometheus_ui"
 
         check {
