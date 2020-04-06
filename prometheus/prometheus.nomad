@@ -70,9 +70,7 @@ EOH
       resources {
         network {
           mbits = 10
-          port  "prometheus_ui"{
-            static = "9090"
-          }
+          port  "prometheus_ui" {}
         }
       }
 

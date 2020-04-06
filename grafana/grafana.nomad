@@ -29,7 +29,7 @@ job "grafana" {
 
       template {
         source = "local/provisioning/datasources/prometheus.yml.tpl"
-        destination = "local/provisioning/prometheus.yml"
+        destination = "local/provisioning/datasources/prometheus.yml"
       }
 
       resources {
