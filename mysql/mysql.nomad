@@ -7,6 +7,7 @@ job "mysql" {
       driver = "docker"
       config {
         image = "mysql"
+        command = ""
       }
 
       env {
@@ -15,24 +16,14 @@ job "mysql" {
       }
 
       artifact {
-        source      = "https://medium.com/faun/using-mysql-on-docker-e6c6216c91e1"
-        destination = "/var/lib/mysql-files"
+        source      = "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-province/dpc-covid19-ita-province.csv"
+        destination = "/var/lib/mysql-files/"
       }
 
       artifact {
-        source      = "github=link"
-        destination = "/local/script"
+        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/mysql/ingest.sql"
+        destination = "/docker-entrypoint-initdb.d"
       }
-
-    //   artifact {
-    //     source      = "github.com/xaviermerino/nomad-jobs/grafana/dashboards"
-    //     destination = "local/dashboards/"
-    //   }
-
-    //   template {
-    //     source = "local/provisioning/datasources/prometheus.yml.tpl"
-    //     destination = "local/provisioning/datasources/prometheus.yml"
-    //   }
 
       resources {
         cpu    = 1000
