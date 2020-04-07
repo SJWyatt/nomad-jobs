@@ -22,7 +22,7 @@ job "mysql" {
 
       artifact {
         source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/mysql/ingest.sql"
-        destination = "/docker-entrypoint-initdb.d"
+        destination = "/docker-entrypoint-initdb.d/ingest.sql"
       }
 
       resources {
