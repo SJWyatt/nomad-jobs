@@ -1,4 +1,4 @@
-job "inlfuxdb" {
+job "influxdb" {
   datacenters = ["dc1"]
 
   # Start api group
@@ -8,16 +8,24 @@ job "inlfuxdb" {
 		task "covid-db" {
       driver = "docker"
 
+      artifact {
+        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo/influxdb/influxdb.conf"
+        destination = "/local/"
+      }
+
       config {
         image = "influxdb"
+        args = [
+          "-config", "/etc/influxdb/influxdb.conf"
+        ]
+        
         port_map {
           http = 8086
         }
-      }
 
-      artifact {
-        source      = "influxdb.conf"
-        destination = "/etc/influxdb/"
+        volumes = [
+          "/local/influxdb.conf:/etc/influxdb/influxdb.conf"
+        ]
       }
 
       resources {
