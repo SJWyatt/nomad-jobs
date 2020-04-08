@@ -24,7 +24,7 @@ job "influxdb" {
         }
 
         volumes = [
-          "/local/influxdb.conf:/etc/influxdb/influxdb.conf"
+          "local/influxdb.conf:/etc/influxdb/influxdb.conf"
         ]
       }
 
@@ -35,7 +35,6 @@ job "influxdb" {
           mbits = 100
           port "http" {
             static = 8086
-            to = 8086
           }
         }
       }
