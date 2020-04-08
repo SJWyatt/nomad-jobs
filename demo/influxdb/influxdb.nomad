@@ -5,11 +5,28 @@ job "influxdb" {
   group "covid-db" {
     count = 1
 
+    volume "influxdb" {
+      type      = "host"
+      read_only = false
+      source    = "influxdb"
+    }
+
 		task "covid-db" {
       driver = "docker"
 
+      volume_mount {
+        volume      = "influxdb"
+        destination = "/var/lib/influxdb"
+        read_only   = false
+      }
+
       artifact {
         source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo/influxdb/influxdb.conf"
+        destination = "/local/"
+      }
+
+      artifact {
+        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo/influxdb/influxdb-init.iql"
         destination = "/local/"
       }
 
@@ -24,7 +41,8 @@ job "influxdb" {
         }
 
         volumes = [
-          "local/influxdb.conf:/etc/influxdb/influxdb.conf"
+          "local/influxdb.conf:/etc/influxdb/influxdb.conf",
+          "local/influxdb-init.iql:/docker-entrypoint-initdb.d/influxdb-init.tql"
         ]
       }
 
