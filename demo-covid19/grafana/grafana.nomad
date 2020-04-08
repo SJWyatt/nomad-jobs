@@ -46,6 +46,7 @@ job "grafana" {
       service {
         name = "grafana"
         port = "http"
+        tags = ["urlprefix-/"]
         check {
           name     = "Grafana HTTP"
           type     = "http"
