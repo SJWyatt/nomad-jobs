@@ -19,18 +19,18 @@ job "grafana" {
       }
 
       artifact {
-        source      = "github.com/xaviermerino/nomad-jobs/grafana/provisioning"
+        source      = "github.com/xaviermerino/nomad-jobs/demo-covid19/grafana/provisioning"
         destination = "local/provisioning/"
       }
 
       artifact {
-        source      = "github.com/xaviermerino/nomad-jobs/grafana/dashboards"
+        source      = "github.com/xaviermerino/nomad-jobs/demo-covid19/grafana/dashboards"
         destination = "local/dashboards/"
       }
 
       template {
-        source = "local/provisioning/datasources/prometheus.yml.tpl"
-        destination = "local/provisioning/datasources/prometheus.yml"
+        source = "local/provisioning/datasources/datasources.yml.tpl"
+        destination = "local/provisioning/datasources/datasources.yml"
       }
 
       resources {
