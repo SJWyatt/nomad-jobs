@@ -25,7 +25,7 @@ EOH
       }
 
       artifact {
-        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo/influxdb/covid19.py"
+        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo/covid/covid19.py"
         destination = "/local/"
       }
 
