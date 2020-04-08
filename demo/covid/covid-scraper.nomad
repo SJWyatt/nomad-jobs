@@ -26,7 +26,7 @@ EOH
 
       artifact {
         source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo/covid/covid19.py"
-        destination = "/local/"
+        destination = "/local/scripts"
       }
 
       config {
@@ -36,8 +36,9 @@ EOH
           "-c", "while true; do echo 'Hit CTRL+C'; sleep 1; done"
         ]
         volumes = [
-          "local/covid19.py:/root/covid19.py"
+          "local/scripts/covid19.py:/root/covid19-2.py"
         ]
+        #dns_servers = ["172.17.0.1", "8.8.8.8"]
       }
 
       resources {
@@ -45,6 +46,7 @@ EOH
         memory = 300 
         network {
           mbits = 100
+          mode = "host"
         }
       }
 
