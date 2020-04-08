@@ -79,3 +79,5 @@ for m in measurements_hash:
 #Commit to Influxdb
 if measurements:    
     client.write_points(measurements)
+
+print("Done sending data!")
