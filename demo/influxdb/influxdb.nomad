@@ -1,24 +1,11 @@
 job "influxdb" {
   datacenters = ["dc1"]
 
-  # Start api group
-  group "covid-db" {
+  group "influxdb" {
     count = 1
 
-    // volume "influxdb" {
-    //   type      = "host"
-    //   read_only = false
-    //   source    = "influxdb"
-    // }
-
-		task "covid-db" {
+		task "influxdb" {
       driver = "docker"
-
-      // volume_mount {
-      //   volume      = "influxdb"
-      //   destination = "/var/lib/influxdb"
-      //   read_only   = false
-      // }
 
       artifact {
         source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo/influxdb/influxdb.conf"
@@ -57,8 +44,19 @@ job "influxdb" {
         }
       }
 
-		} # End task
+      service {
+        name = "influxdb"
+        port = "http"
+        check {
+          name     = "Influx Ping"
+          type     = "http"
+          path     = "/ping?verbose=true"
+          interval = "5s"
+          timeout  = "2s"
+        }
+      }
 
+		} # End task
 	} # End group
 
 } # End job
