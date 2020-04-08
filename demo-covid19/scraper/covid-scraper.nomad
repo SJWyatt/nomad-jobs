@@ -1,4 +1,4 @@
-job "scraper-bathc" {
+job "scraper-batch" {
 	datacenters = ["dc1"]
   type = "batch"
 
@@ -32,10 +32,6 @@ EOH
 
       config {
         image = "xaviermerino/covid-scraper:latest"
-        command = "/bin/bash"
-        // args = [
-        //   "-c", "while true; do echo 'Hit CTRL+C'; sleep 1; done"
-        // ]
         volumes = [
           "local/scripts/covid19.py:/root/covid19.py"
         ]
