@@ -3,7 +3,7 @@ job "scraper-batch" {
   type = "batch"
 
   periodic {
-    cron = "*/5 * * * *"
+    cron = "*/2 * * * *"
     prohibit_overlap = true
   }
 
