@@ -1,10 +1,10 @@
 job "scraper" {
 	datacenters = ["dc1"]
 
-  // periodic {
-  //   cron = "*/5 * * * *"
-  //   prohibiy_overlap = true
-  // }
+  periodic {
+    cron = "*/5 * * * *"
+    prohibit_overlap = true
+  }
 
   group "scraper" {
     count = 1
