@@ -39,7 +39,6 @@ EOH
         volumes = [
           "local/scripts/covid19.py:/root/covid19.py"
         ]
-        #dns_servers = ["172.17.0.1", "8.8.8.8"]
       }
 
       resources {
