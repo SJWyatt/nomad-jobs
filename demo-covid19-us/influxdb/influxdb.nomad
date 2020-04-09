@@ -8,12 +8,12 @@ job "influxdb" {
       driver = "docker"
 
       artifact {
-        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo-covid19/influxdb/influxdb.conf"
+        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo-covid19-us/influxdb/influxdb.conf"
         destination = "/local/"
       }
 
       artifact {
-        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo-covid19/influxdb/influxdb-init.iql"
+        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo-covid19-us/influxdb/influxdb-init.iql"
         destination = "/local/"
       }
 
@@ -34,7 +34,7 @@ job "influxdb" {
       }
 
       resources {
-        cpu = 1000 
+        cpu = 2000 
         memory = 1024 
         network {
           mbits = 100

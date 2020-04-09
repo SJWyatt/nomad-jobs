@@ -19,12 +19,12 @@ job "grafana" {
       }
 
       artifact {
-        source      = "github.com/xaviermerino/nomad-jobs/demo-covid19/grafana/provisioning"
+        source      = "github.com/xaviermerino/nomad-jobs/demo-covid19-us/grafana/provisioning"
         destination = "local/provisioning/"
       }
 
       artifact {
-        source      = "github.com/xaviermerino/nomad-jobs/demo-covid19/grafana/dashboards"
+        source      = "github.com/xaviermerino/nomad-jobs/demo-covid19-us/grafana/dashboards"
         destination = "local/dashboards/"
       }
 
@@ -34,7 +34,7 @@ job "grafana" {
       }
 
       resources {
-        cpu    = 1000
+        cpu    = 2000
         memory = 1024
         network {
           mbits = 10

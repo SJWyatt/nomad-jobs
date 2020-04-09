@@ -47,6 +47,7 @@ inputfiles = {
 measurements = []
 measurements_hash = {}
 
+print("Started processing data...")
 #Iterate through each Source File and build hash table
 for i in sorted(inputfiles.keys()):
     field = i
@@ -95,9 +96,10 @@ for i in sorted(inputfiles.keys()):
                         measurements_hash[time_loc_hash]['fields']['population'] = int(record['Population'])
                 except ValueError:
                     measurements_hash[time_loc_hash]['fields']['population'] = 0 
-                
 
+print("Done processing data!")
 
+print("Preparing for data ingest...")
 #Drop existing Measurement to ensure data consistency with Datasource being updated regularly
 if INFLUX_DROPMEASUREMENT:
     client.drop_measurement('covid19')
@@ -108,4 +110,4 @@ for m in measurements_hash:
 if measurements:    
     client.write_points(measurements, batch_size=1000)
 
-print("Done sending data!")
+print("Done ingesting data!")
