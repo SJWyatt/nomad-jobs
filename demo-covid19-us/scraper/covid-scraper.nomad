@@ -30,6 +30,16 @@ EOH
         destination = "/local/scripts"
       }
 
+      artifact {
+        source      = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv"
+        destination = "/local/data"
+      }
+
+      artifact {
+        source      = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv"
+        destination = "/local/data"
+      }
+      
       config {
         image = "xaviermerino/covid-scraper:latest"
         volumes = [

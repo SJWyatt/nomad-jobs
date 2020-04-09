@@ -40,8 +40,8 @@ GMT = Zone(0, False, 'GMT')
 
 #Direct Links to the 3 CSV Files maintained by JHU CCSE
 inputfiles = {
-    "confirmed":"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv",
-    "deaths":"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv"
+    "confirmed":"time_series_covid19_confirmed_US.csv",
+    "deaths":"time_series_covid19_deaths_US.csv"
     }
 
 measurements = []
@@ -50,12 +50,9 @@ measurements_hash = {}
 #Iterate through each Source File and build hash table
 for i in sorted(inputfiles.keys()):
     field = i
-    url = inputfiles[i]
-    response = requests.get(url)
-    if response.status_code != 200:
-        print('Failed to get data:', response.status_code)
-    else:
-        wrapper = csv.DictReader(response.text.strip().split('\n'))
+
+    with open(inputfiles[i], newline='\n') as csvfile:
+        wrapper = csv.DictReader(csvfile)
         results = []
         for record in wrapper:
             today = datetime.today().replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT).timestamp()
