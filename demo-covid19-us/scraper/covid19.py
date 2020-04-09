@@ -10,7 +10,7 @@ import requests
 import itertools
 import geohash
 from datetime import datetime, tzinfo, timedelta
-# from influxdb import InfluxDBClient
+from influxdb import InfluxDBClient
 import os
 
 class Zone(tzinfo):
