@@ -1,11 +1,11 @@
-job "scraper-batch" {
+job "scraper" {
 	datacenters = ["dc1"]
-  type = "batch"
+  type = "service"
 
-  periodic {
-    cron = "*/2 * * * *"
-    prohibit_overlap = true
-  }
+  // periodic {
+  //   cron = "*/2 * * * *"
+  //   prohibit_overlap = true
+  // }
 
   group "scraper" {
     count = 1
@@ -26,7 +26,7 @@ EOH
       }
 
       artifact {
-        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo-covid19/scraper/covid19.py"
+        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo-covid19-us/scraper/covid19.py"
         destination = "/local/scripts"
       }
 
@@ -35,11 +35,15 @@ EOH
         volumes = [
           "local/scripts/covid19.py:/root/covid19.py"
         ]
+        command = "/bin/bash"
+        args = [
+          "-c", "while true; do echo 'Waiting...'; sleep 5; done"
+        ]
       }
 
       resources {
-        cpu = 500 
-        memory = 300 
+        cpu = 1000 
+        memory = 500 
         network {
           mbits = 100
           mode = "host"
