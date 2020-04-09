@@ -66,6 +66,7 @@ for i in sorted(inputfiles.keys()):
             elif field == "deaths":
                 # Deaths has an extra Population record
                 datekeys = len(record) - 12 
+                population = record['Population']
 
             for k in sorted(record.keys())[:datekeys]:    
                 datemdy = datetime.strptime(k, '%m/%d/%y').replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT).timestamp()
@@ -83,10 +84,18 @@ for i in sorted(inputfiles.keys()):
                     measurements_hash[time_loc_hash]['tags']['state'] = state.strip()
                     measurements_hash[time_loc_hash]['tags']['county'] = county.strip()
                     measurements_hash[time_loc_hash]['tags']['geohash'] = geohash.encode(float(record['Lat']),float(record['Long_'])) # Generate Geohash for use with Grafana Plugin
+
                 try:
                     measurements_hash[time_loc_hash]['fields'][field] = int(record[k]) 
                 except ValueError:
                     measurements_hash[time_loc_hash]['fields'][field] = 0    
+                
+                try:
+                    if field == "deaths":
+                        measurements_hash[time_loc_hash]['fields']['population'] = int(record['Population'])
+                except ValueError:
+                    measurements_hash[time_loc_hash]['fields']['population'] = 0 
+                
 
 
 #Drop existing Measurement to ensure data consistency with Datasource being updated regularly

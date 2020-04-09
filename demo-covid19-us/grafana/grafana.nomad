@@ -35,7 +35,7 @@ job "grafana" {
 
       resources {
         cpu    = 1000
-        memory = 256
+        memory = 1024
         network {
           mbits = 10
           mode = "host"

@@ -1,11 +1,11 @@
-job "scraper-us-batch" {
+job "scraper-us" {
 	datacenters = ["dc1"]
   type = "batch"
 
-  // periodic {
-  //   cron = "*/2 * * * *"
-  //   prohibit_overlap = true
-  // }
+  periodic {
+    cron = "*/15 * * * *"
+    prohibit_overlap = true
+  }
 
   group "scraper" {
     count = 1
