@@ -19,10 +19,10 @@ datasources:
   secureJsonData:
     password: 
 
-- name: InfluxDB-Global
+- name: InfluxDBGlobal
   type: influxdb
   access: proxy
-  database: covid19-global
+  database: covid19global
   user: 
   url: http://localhost:8086
   jsonData:
