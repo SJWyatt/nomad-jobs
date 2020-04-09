@@ -26,7 +26,7 @@ EOH
       }
 
       artifact {
-        source      = "github.com/xaviermerino/nomad-jobs/demo-covid19-us/scraper/covid19.py"
+        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo-covid19-us/scraper/covid19.py"
         destination = "/local/scripts"
       }
 
