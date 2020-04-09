@@ -29,7 +29,7 @@ class Zone(tzinfo):
         return self.name
 
 INFLUX_HOST = "localhost"
-INFLUX_DB = "covid19-global"
+INFLUX_DB = "covid19global"
 INFLUX_DBPORT =  8086
 INFLUX_USER = ""
 INFLUX_PASS = ""
@@ -72,7 +72,7 @@ for i in sorted(inputfiles.keys()):
                     measurements_hash[time_loc_hash]['fields'][field] = 0    
 #Drop existing Measurement to ensure data consistency with Datasource being updated regularly
 if INFLUX_DROPMEASUREMENT:
-    client.drop_measurement('covid19-global')
+    client.drop_measurement('covid19global')
 #Iterate through Hash table and format for Influxdb Client
 for m in measurements_hash:
     measurements.append(measurements_hash[m])   
