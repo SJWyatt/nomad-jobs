@@ -44,13 +44,13 @@ EOH
         image = "xaviermerino/covid-scraper:latest"
         volumes = [
           "local/scripts/covid19.py:/root/covid19.py",
-          "local/data/time_series_covid19_confirmed_US.csv:/root/time_series_covid19_confirmed_US.csv",
-          "local/data/time_series_covid19_deaths_US.csv:/root/time_series_covid19_deaths_US.csv"
+          "local/data/time_series_covid19_confirmed_US.csv:/time_series_covid19_confirmed_US.csv",
+          "local/data/time_series_covid19_deaths_US.csv:/time_series_covid19_deaths_US.csv"
         ]
-        command = "/bin/bash"
-        args = [
-          "-c", "while true; do echo 'Waiting...'; sleep 5; done"
-        ]
+        // command = "/bin/bash"
+        // args = [
+        //   "-c", "while true; do echo 'Waiting...'; sleep 5; done"
+        // ]
       }
 
       resources {
