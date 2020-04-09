@@ -1,6 +1,6 @@
-job "scraper" {
+job "scraper-us-batch" {
 	datacenters = ["dc1"]
-  type = "service"
+  type = "batch"
 
   // periodic {
   //   cron = "*/2 * * * *"
