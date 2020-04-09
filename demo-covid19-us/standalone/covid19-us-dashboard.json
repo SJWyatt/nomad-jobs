@@ -18,7 +18,7 @@
   "gnetId": 11949,
   "graphTooltip": 0,
   "id": 2,
-  "iteration": 1586417218978,
+  "iteration": 1586472993739,
   "links": [],
   "panels": [
     {
@@ -84,7 +84,7 @@
         "justifyMode": "auto",
         "orientation": "auto"
       },
-      "pluginVersion": "6.7.0",
+      "pluginVersion": "6.7.2",
       "targets": [
         {
           "groupBy": [
@@ -144,8 +144,8 @@
       "esLocationName": "location",
       "esMetric": "Confirmed",
       "gridPos": {
-        "h": 7,
-        "w": 8,
+        "h": 15,
+        "w": 24,
         "x": 0,
         "y": 2
       },
@@ -253,6 +253,619 @@
       "valueName": "total"
     },
     {
+      "datasource": "InfluxDB",
+      "description": "These are running total's rather than calculating active cases etc.",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 17
+      },
+      "id": 6,
+      "interval": "1d",
+      "maxPerRow": 3,
+      "options": {
+        "colorMode": "background",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "orange",
+                  "value": null
+                }
+              ]
+            },
+            "title": "${__series.name}",
+            "unit": "short"
+          },
+          "overrides": [],
+          "values": false
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto"
+      },
+      "pluginVersion": "6.7.2",
+      "repeat": null,
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "covid19",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "confirmed"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  "Confirmed"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "state",
+              "operator": "=~",
+              "value": "/^$States$/"
+            },
+            {
+              "condition": "AND",
+              "key": "county",
+              "operator": "=~",
+              "value": "/^$County$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": "InfluxDB",
+      "description": "Doesnt filter as Population of world hard coded\n\nFuture Improvement to Store Country Populations",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 17
+      },
+      "id": 32,
+      "interval": "1d",
+      "options": {
+        "colorMode": "background",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "orange",
+                  "value": null
+                }
+              ]
+            },
+            "title": "Infected Population",
+            "unit": "percentunit"
+          },
+          "overrides": [],
+          "values": false
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto"
+      },
+      "pluginVersion": "6.7.2",
+      "targets": [
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "covid19",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"confirmed\")/sum(\"population\") FROM \"covid19\" WHERE (\"state\" =~ /^$States$/ AND \"county\" =~ /^$County$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "confirmed"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "state",
+              "operator": "=~",
+              "value": "/^$States$/"
+            },
+            {
+              "condition": "AND",
+              "key": "county",
+              "operator": "=~",
+              "value": "/^$County$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": "InfluxDB",
+      "description": "These are running total's rather than calculating active cases etc.",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 17
+      },
+      "id": 80,
+      "interval": "1d",
+      "maxPerRow": 3,
+      "options": {
+        "colorMode": "background",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                }
+              ]
+            },
+            "title": "${__series.name}",
+            "unit": "short"
+          },
+          "overrides": [],
+          "values": false
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto"
+      },
+      "pluginVersion": "6.7.2",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "covid19",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "deaths"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  "Deaths"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "state",
+              "operator": "=~",
+              "value": "/^$States$/"
+            },
+            {
+              "condition": "AND",
+              "key": "county",
+              "operator": "=~",
+              "value": "/^$County$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": "InfluxDB",
+      "description": "These are running total's rather than calculating active cases etc.",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 17
+      },
+      "id": 70,
+      "interval": "1d",
+      "maxPerRow": 3,
+      "options": {
+        "colorMode": "background",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                }
+              ]
+            },
+            "title": "${__series.name}",
+            "unit": "percentunit"
+          },
+          "overrides": [],
+          "values": false
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto"
+      },
+      "pluginVersion": "6.7.2",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "covid19",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"deaths\")/sum(\"population\") AS \"Death Rate\" FROM \"covid19\" WHERE (\"state\" =~ /^$States$/ AND \"county\" =~ /^$County$/) AND $timeFilter GROUP BY time($__interval) fill(none)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "deaths"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  "Deaths"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "state",
+              "operator": "=~",
+              "value": "/^$States$/"
+            },
+            {
+              "condition": "AND",
+              "key": "county",
+              "operator": "=~",
+              "value": "/^$County$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": "InfluxDB",
+      "description": "These are running total's rather than calculating active cases etc.",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 17
+      },
+      "id": 75,
+      "interval": "1d",
+      "maxPerRow": 3,
+      "options": {
+        "colorMode": "background",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "blue",
+                  "value": null
+                }
+              ]
+            },
+            "title": "${__series.name}",
+            "unit": "short"
+          },
+          "overrides": [],
+          "values": false
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto"
+      },
+      "pluginVersion": "6.7.2",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "covid19",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"population\") AS \"Population\" FROM \"covid19\" WHERE (\"state\" =~ /^$States$/) AND $timeFilter GROUP BY time($__interval) fill(none)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "population"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  "Population"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "state",
+              "operator": "=~",
+              "value": "/^$States$/"
+            },
+            {
+              "condition": "AND",
+              "key": "county",
+              "operator": "=~",
+              "value": "/^$County$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": "InfluxDB",
+      "description": "These are running total's rather than calculating active cases etc.",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 17
+      },
+      "id": 81,
+      "interval": "1d",
+      "maxPerRow": 3,
+      "options": {
+        "colorMode": "background",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "title": "${__series.name}",
+            "unit": "short"
+          },
+          "overrides": [],
+          "values": false
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto"
+      },
+      "pluginVersion": "6.7.2",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "covid19",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"population\") AS \"US Population\" FROM \"covid19\" WHERE $timeFilter GROUP BY time($__interval) fill(none)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "population"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  "Population"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "state",
+              "operator": "=~",
+              "value": "/^$States$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "stat"
+    },
+    {
       "aliasColors": {
         "Confirmed": "blue",
         "Deaths": "dark-red",
@@ -268,10 +881,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 16,
-        "x": 8,
-        "y": 2
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 21
       },
       "hiddenSeries": false,
       "id": 16,
@@ -427,619 +1040,6 @@
       }
     },
     {
-      "datasource": "InfluxDB",
-      "description": "These are running total's rather than calculating active cases etc.",
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 0,
-        "y": 9
-      },
-      "id": 6,
-      "interval": "1d",
-      "maxPerRow": 3,
-      "options": {
-        "colorMode": "background",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "defaults": {
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "orange",
-                  "value": null
-                }
-              ]
-            },
-            "title": "${__series.name}",
-            "unit": "short"
-          },
-          "overrides": [],
-          "values": false
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto"
-      },
-      "pluginVersion": "6.7.0",
-      "repeat": null,
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "alias": "$col",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "covid19",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "confirmed"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              },
-              {
-                "params": [
-                  "Confirmed"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "state",
-              "operator": "=~",
-              "value": "/^$States$/"
-            },
-            {
-              "condition": "AND",
-              "key": "county",
-              "operator": "=~",
-              "value": "/^$County$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "type": "stat"
-    },
-    {
-      "datasource": "InfluxDB",
-      "description": "Doesnt filter as Population of world hard coded\n\nFuture Improvement to Store Country Populations",
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 9
-      },
-      "id": 32,
-      "interval": "1d",
-      "options": {
-        "colorMode": "background",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "defaults": {
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "orange",
-                  "value": null
-                }
-              ]
-            },
-            "title": "Infected Population",
-            "unit": "percentunit"
-          },
-          "overrides": [],
-          "values": false
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto"
-      },
-      "pluginVersion": "6.7.0",
-      "targets": [
-        {
-          "alias": "$col",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "covid19",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"confirmed\")/sum(\"population\") FROM \"covid19\" WHERE (\"state\" =~ /^$States$/ AND \"county\" =~ /^$County$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "confirmed"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "state",
-              "operator": "=~",
-              "value": "/^$States$/"
-            },
-            {
-              "condition": "AND",
-              "key": "county",
-              "operator": "=~",
-              "value": "/^$County$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "type": "stat"
-    },
-    {
-      "datasource": "InfluxDB",
-      "description": "These are running total's rather than calculating active cases etc.",
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 9
-      },
-      "id": 80,
-      "interval": "1d",
-      "maxPerRow": 3,
-      "options": {
-        "colorMode": "background",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "defaults": {
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "red",
-                  "value": null
-                }
-              ]
-            },
-            "title": "${__series.name}",
-            "unit": "short"
-          },
-          "overrides": [],
-          "values": false
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto"
-      },
-      "pluginVersion": "6.7.0",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "alias": "$col",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "covid19",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "deaths"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              },
-              {
-                "params": [
-                  "Deaths"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "state",
-              "operator": "=~",
-              "value": "/^$States$/"
-            },
-            {
-              "condition": "AND",
-              "key": "county",
-              "operator": "=~",
-              "value": "/^$County$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "type": "stat"
-    },
-    {
-      "datasource": "InfluxDB",
-      "description": "These are running total's rather than calculating active cases etc.",
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 9
-      },
-      "id": 70,
-      "interval": "1d",
-      "maxPerRow": 3,
-      "options": {
-        "colorMode": "background",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "defaults": {
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "red",
-                  "value": null
-                }
-              ]
-            },
-            "title": "${__series.name}",
-            "unit": "percentunit"
-          },
-          "overrides": [],
-          "values": false
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto"
-      },
-      "pluginVersion": "6.7.0",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "alias": "$col",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "covid19",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"deaths\")/sum(\"population\") AS \"Deaths\" FROM \"covid19\" WHERE (\"state\" =~ /^$States$/ AND \"county\" =~ /^$County$/) AND $timeFilter GROUP BY time($__interval) fill(none)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "deaths"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              },
-              {
-                "params": [
-                  "Deaths"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "state",
-              "operator": "=~",
-              "value": "/^$States$/"
-            },
-            {
-              "condition": "AND",
-              "key": "county",
-              "operator": "=~",
-              "value": "/^$County$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "type": "stat"
-    },
-    {
-      "datasource": "InfluxDB",
-      "description": "These are running total's rather than calculating active cases etc.",
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 9
-      },
-      "id": 75,
-      "interval": "1d",
-      "maxPerRow": 3,
-      "options": {
-        "colorMode": "background",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "defaults": {
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "blue",
-                  "value": null
-                }
-              ]
-            },
-            "title": "${__series.name}",
-            "unit": "short"
-          },
-          "overrides": [],
-          "values": false
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto"
-      },
-      "pluginVersion": "6.7.0",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "alias": "$col",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "covid19",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"population\") AS \"Population\" FROM \"covid19\" WHERE (\"state\" =~ /^$States$/) AND $timeFilter GROUP BY time($__interval) fill(none)",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "population"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              },
-              {
-                "params": [
-                  "Population"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "state",
-              "operator": "=~",
-              "value": "/^$States$/"
-            },
-            {
-              "condition": "AND",
-              "key": "county",
-              "operator": "=~",
-              "value": "/^$County$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "type": "stat"
-    },
-    {
-      "datasource": "InfluxDB",
-      "description": "These are running total's rather than calculating active cases etc.",
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 9
-      },
-      "id": 81,
-      "interval": "1d",
-      "maxPerRow": 3,
-      "options": {
-        "colorMode": "background",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "defaults": {
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                }
-              ]
-            },
-            "title": "${__series.name}",
-            "unit": "short"
-          },
-          "overrides": [],
-          "values": false
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto"
-      },
-      "pluginVersion": "6.7.0",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "alias": "$col",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "covid19",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"population\") AS \"US Population\" FROM \"covid19\" WHERE $timeFilter GROUP BY time($__interval) fill(none)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "population"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              },
-              {
-                "params": [
-                  "Population"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "state",
-              "operator": "=~",
-              "value": "/^$States$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "type": "stat"
-    },
-    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -1048,10 +1048,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 12,
         "x": 0,
-        "y": 13
+        "y": 26
       },
       "hiddenSeries": false,
       "id": 2,
@@ -1195,10 +1195,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 12,
         "x": 12,
-        "y": 13
+        "y": 26
       },
       "hiddenSeries": false,
       "id": 63,
@@ -1350,10 +1350,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 12,
         "x": 0,
-        "y": 18
+        "y": 32
       },
       "hiddenSeries": false,
       "id": 82,
@@ -1496,10 +1496,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 12,
         "x": 12,
-        "y": 18
+        "y": 32
       },
       "hiddenSeries": false,
       "id": 83,
@@ -1651,6 +1651,7 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
           "text": "New York",
           "value": [
             "New York"
@@ -1659,362 +1660,356 @@
         "datasource": "InfluxDB",
         "definition": "SHOW TAG VALUES with KEY=state",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "index": -1,
         "label": null,
         "multi": true,
         "name": "States",
         "options": [
           {
-            "$$hashKey": "object:14287",
-            "selected": false,
-            "text": "All",
-            "value": "$__all"
-          },
-          {
-            "$$hashKey": "object:14288",
+            "$$hashKey": "object:255",
             "selected": false,
             "text": "Alabama",
             "value": "Alabama"
           },
           {
-            "$$hashKey": "object:14289",
+            "$$hashKey": "object:256",
             "selected": false,
             "text": "Alaska",
             "value": "Alaska"
           },
           {
-            "$$hashKey": "object:14290",
+            "$$hashKey": "object:257",
             "selected": false,
             "text": "American Samoa",
             "value": "American Samoa"
           },
           {
-            "$$hashKey": "object:14291",
+            "$$hashKey": "object:258",
             "selected": false,
             "text": "Arizona",
             "value": "Arizona"
           },
           {
-            "$$hashKey": "object:14292",
+            "$$hashKey": "object:259",
             "selected": false,
             "text": "Arkansas",
             "value": "Arkansas"
           },
           {
-            "$$hashKey": "object:14293",
+            "$$hashKey": "object:260",
             "selected": false,
             "text": "California",
             "value": "California"
           },
           {
-            "$$hashKey": "object:14294",
+            "$$hashKey": "object:261",
             "selected": false,
             "text": "Colorado",
             "value": "Colorado"
           },
           {
-            "$$hashKey": "object:14295",
+            "$$hashKey": "object:262",
             "selected": false,
             "text": "Connecticut",
             "value": "Connecticut"
           },
           {
-            "$$hashKey": "object:14296",
+            "$$hashKey": "object:263",
             "selected": false,
             "text": "Delaware",
             "value": "Delaware"
           },
           {
-            "$$hashKey": "object:14297",
+            "$$hashKey": "object:264",
             "selected": false,
             "text": "Diamond Princess",
             "value": "Diamond Princess"
           },
           {
-            "$$hashKey": "object:14298",
+            "$$hashKey": "object:265",
             "selected": false,
             "text": "District of Columbia",
             "value": "District of Columbia"
           },
           {
-            "$$hashKey": "object:14299",
+            "$$hashKey": "object:266",
             "selected": false,
             "text": "Florida",
             "value": "Florida"
           },
           {
-            "$$hashKey": "object:14300",
+            "$$hashKey": "object:267",
             "selected": false,
             "text": "Georgia",
             "value": "Georgia"
           },
           {
-            "$$hashKey": "object:14301",
+            "$$hashKey": "object:268",
             "selected": false,
             "text": "Grand Princess",
             "value": "Grand Princess"
           },
           {
-            "$$hashKey": "object:14302",
+            "$$hashKey": "object:269",
             "selected": false,
             "text": "Guam",
             "value": "Guam"
           },
           {
-            "$$hashKey": "object:14303",
+            "$$hashKey": "object:270",
             "selected": false,
             "text": "Hawaii",
             "value": "Hawaii"
           },
           {
-            "$$hashKey": "object:14304",
+            "$$hashKey": "object:271",
             "selected": false,
             "text": "Idaho",
             "value": "Idaho"
           },
           {
-            "$$hashKey": "object:14305",
+            "$$hashKey": "object:272",
             "selected": false,
             "text": "Illinois",
             "value": "Illinois"
           },
           {
-            "$$hashKey": "object:14306",
+            "$$hashKey": "object:273",
             "selected": false,
             "text": "Indiana",
             "value": "Indiana"
           },
           {
-            "$$hashKey": "object:14334",
+            "$$hashKey": "object:274",
             "selected": false,
             "text": "Iowa",
             "value": "Iowa"
           },
           {
-            "$$hashKey": "object:14335",
+            "$$hashKey": "object:439",
             "selected": false,
             "text": "Kansas",
             "value": "Kansas"
           },
           {
-            "$$hashKey": "object:14336",
+            "$$hashKey": "object:440",
             "selected": false,
             "text": "Kentucky",
             "value": "Kentucky"
           },
           {
-            "$$hashKey": "object:14337",
+            "$$hashKey": "object:441",
             "selected": false,
             "text": "Louisiana",
             "value": "Louisiana"
           },
           {
-            "$$hashKey": "object:14338",
+            "$$hashKey": "object:442",
             "selected": false,
             "text": "Maine",
             "value": "Maine"
           },
           {
-            "$$hashKey": "object:14339",
+            "$$hashKey": "object:443",
             "selected": false,
             "text": "Maryland",
             "value": "Maryland"
           },
           {
-            "$$hashKey": "object:14340",
+            "$$hashKey": "object:444",
             "selected": false,
             "text": "Massachusetts",
             "value": "Massachusetts"
           },
           {
-            "$$hashKey": "object:14341",
+            "$$hashKey": "object:445",
             "selected": false,
             "text": "Michigan",
             "value": "Michigan"
           },
           {
-            "$$hashKey": "object:14342",
+            "$$hashKey": "object:446",
             "selected": false,
             "text": "Minnesota",
             "value": "Minnesota"
           },
           {
-            "$$hashKey": "object:14343",
+            "$$hashKey": "object:447",
             "selected": false,
             "text": "Mississippi",
             "value": "Mississippi"
           },
           {
-            "$$hashKey": "object:14344",
+            "$$hashKey": "object:448",
             "selected": false,
             "text": "Missouri",
             "value": "Missouri"
           },
           {
-            "$$hashKey": "object:14345",
+            "$$hashKey": "object:449",
             "selected": false,
             "text": "Montana",
             "value": "Montana"
           },
           {
-            "$$hashKey": "object:14346",
+            "$$hashKey": "object:450",
             "selected": false,
             "text": "Nebraska",
             "value": "Nebraska"
           },
           {
-            "$$hashKey": "object:14347",
+            "$$hashKey": "object:451",
             "selected": false,
             "text": "Nevada",
             "value": "Nevada"
           },
           {
-            "$$hashKey": "object:14348",
+            "$$hashKey": "object:452",
             "selected": false,
             "text": "New Hampshire",
             "value": "New Hampshire"
           },
           {
-            "$$hashKey": "object:14349",
+            "$$hashKey": "object:453",
             "selected": false,
             "text": "New Jersey",
             "value": "New Jersey"
           },
           {
-            "$$hashKey": "object:14350",
+            "$$hashKey": "object:454",
             "selected": false,
             "text": "New Mexico",
             "value": "New Mexico"
           },
           {
-            "$$hashKey": "object:14351",
+            "$$hashKey": "object:455",
             "selected": true,
             "text": "New York",
             "value": "New York"
           },
           {
-            "$$hashKey": "object:14352",
+            "$$hashKey": "object:456",
             "selected": false,
             "text": "North Carolina",
             "value": "North Carolina"
           },
           {
-            "$$hashKey": "object:14353",
+            "$$hashKey": "object:457",
             "selected": false,
             "text": "North Dakota",
             "value": "North Dakota"
           },
           {
-            "$$hashKey": "object:14354",
+            "$$hashKey": "object:458",
             "selected": false,
             "text": "Northern Mariana Islands",
             "value": "Northern Mariana Islands"
           },
           {
-            "$$hashKey": "object:14355",
+            "$$hashKey": "object:459",
             "selected": false,
             "text": "Ohio",
             "value": "Ohio"
           },
           {
-            "$$hashKey": "object:14356",
+            "$$hashKey": "object:460",
             "selected": false,
             "text": "Oklahoma",
             "value": "Oklahoma"
           },
           {
-            "$$hashKey": "object:14357",
+            "$$hashKey": "object:461",
             "selected": false,
             "text": "Oregon",
             "value": "Oregon"
           },
           {
-            "$$hashKey": "object:14358",
+            "$$hashKey": "object:462",
             "selected": false,
             "text": "Pennsylvania",
             "value": "Pennsylvania"
           },
           {
-            "$$hashKey": "object:14359",
+            "$$hashKey": "object:463",
             "selected": false,
             "text": "Puerto Rico",
             "value": "Puerto Rico"
           },
           {
-            "$$hashKey": "object:14360",
+            "$$hashKey": "object:464",
             "selected": false,
             "text": "Rhode Island",
             "value": "Rhode Island"
           },
           {
-            "$$hashKey": "object:14361",
+            "$$hashKey": "object:465",
             "selected": false,
             "text": "South Carolina",
             "value": "South Carolina"
           },
           {
-            "$$hashKey": "object:14362",
+            "$$hashKey": "object:466",
             "selected": false,
             "text": "South Dakota",
             "value": "South Dakota"
           },
           {
-            "$$hashKey": "object:14363",
+            "$$hashKey": "object:467",
             "selected": false,
             "text": "Tennessee",
             "value": "Tennessee"
           },
           {
-            "$$hashKey": "object:14364",
+            "$$hashKey": "object:468",
             "selected": false,
             "text": "Texas",
             "value": "Texas"
           },
           {
-            "$$hashKey": "object:14365",
+            "$$hashKey": "object:469",
             "selected": false,
             "text": "Utah",
             "value": "Utah"
           },
           {
-            "$$hashKey": "object:14366",
+            "$$hashKey": "object:470",
             "selected": false,
             "text": "Vermont",
             "value": "Vermont"
           },
           {
-            "$$hashKey": "object:14367",
+            "$$hashKey": "object:471",
             "selected": false,
             "text": "Virgin Islands",
             "value": "Virgin Islands"
           },
           {
-            "$$hashKey": "object:14368",
+            "$$hashKey": "object:472",
             "selected": false,
             "text": "Virginia",
             "value": "Virginia"
           },
           {
-            "$$hashKey": "object:14369",
+            "$$hashKey": "object:473",
             "selected": false,
             "text": "Washington",
             "value": "Washington"
           },
           {
-            "$$hashKey": "object:14370",
+            "$$hashKey": "object:474",
             "selected": false,
             "text": "West Virginia",
             "value": "West Virginia"
           },
           {
-            "$$hashKey": "object:14371",
+            "$$hashKey": "object:475",
             "selected": false,
             "text": "Wisconsin",
             "value": "Wisconsin"
           },
           {
-            "$$hashKey": "object:14372",
+            "$$hashKey": "object:476",
             "selected": false,
             "text": "Wyoming",
             "value": "Wyoming"
@@ -2388,7 +2383,7 @@
     ]
   },
   "time": {
-    "from": "now-60d",
+    "from": "now-14d",
     "to": "now"
   },
   "timepicker": {
@@ -2406,10 +2401,10 @@
     ]
   },
   "timezone": "",
-  "title": "Covid-19 US",
-  "uid": "ADwuh1jZk",
+  "title": "Covid-19 US - States",
+  "uid": "ADwuh1jZk1",
   "variables": {
     "list": []
   },
-  "version": 24
+  "version": 8
 }
