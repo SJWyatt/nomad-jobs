@@ -1,0 +1,34 @@
+- name: Add Telegraf APT Key
+  apt_key:
+    url: https://repos.influxdata.com/influxdb.key
+    state: present
+
+- name: Get Distribution ID
+  shell: cat /etc/lsb-release | grep DISTRIB_ID | cut -d "=" -f2 | tr '[:upper:]' '[:lower:]'
+  register: distribution_shell
+
+- name: Get Codename
+  shell: cat /etc/lsb-release | grep DISTRIB_CODENAME | cut -d "=" -f2
+  register: codename_shell
+
+- name: Storing Distribution ID and Codename
+  set_fact:
+    distribution_id: "{{ distribution_shell.stdout }}"
+    codename: "{{ codename_shell.stdout }}"
+
+- name: Adding the Influx Repository
+  apt_repository:
+    repo: deb https://repos.influxdata.com/"{{ distribution_id }}" "{{ codename }}" stable
+    state: present
+
+- name: Install Influx
+  apt:
+    name: influxdb
+    state: present
+    update_cache: yes
+    
+- name: Reload the system daemons
+  systemd:
+    name: influxdb
+    state: restarted
+    daemon_reload: yes

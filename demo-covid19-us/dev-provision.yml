@@ -1,0 +1,17 @@
+---
+- name: "Covid19 Demo"
+  hosts: localhost
+  connection: local
+  vars:
+    http_port: 80
+    max_clients: 200
+
+  tasks:
+    - name: Install Grafana
+      import_tasks: install_grafana.yml
+    
+    - name: Install InfluxDB
+      import_tasks: install_influx.yml
+    
+    - name: Install Scraper Python Requirements
+      import_tasks: install_scraper.yml

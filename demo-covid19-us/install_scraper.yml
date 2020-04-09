@@ -1,0 +1,12 @@
+- name: Download Scraper
+  get_url:
+    url: https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/demo-covid19-us/scraper/covid19-standalone.py
+    dest: /home/ubuntu
+
+- name: Install Scraper Requirements
+  pip:
+    name: 
+      - requests
+      - python-geohash
+      - influxdb
+    executable: pip3

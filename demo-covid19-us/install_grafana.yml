@@ -1,0 +1,26 @@
+- name: Add Grafana Key
+  apt_key:
+    url: https://packages.grafana.com/gpg.key
+    state: present
+
+- name: Adding the Grafana Repository
+  apt_repository:
+    repo: deb https://packages.grafana.com/oss/deb stable main
+    state: present
+
+- name: Install Grafana
+  apt:
+    name: grafana
+    state: present
+    update_cache: yes
+
+- name: Force systemd for a reload
+  systemd:
+    daemon_reload: yes
+
+- name: Enable grafana service
+  systemd:
+    name: grafana-server
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
