@@ -18,3 +18,14 @@ datasources:
     timeInterval: "15s"
   secureJsonData:
     password: 
+
+- name: InfluxDB-Global
+  type: influxdb
+  access: proxy
+  database: covid19-global
+  user: 
+  url: http://localhost:8086
+  jsonData:
+    timeInterval: "15s"
+  secureJsonData:
+    password: 
