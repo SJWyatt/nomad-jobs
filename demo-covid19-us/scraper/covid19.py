@@ -97,6 +97,6 @@ for m in measurements_hash:
     measurements.append(measurements_hash[m])   
 #Commit to Influxdb
 if measurements:    
-    client.write_points(measurements)
+    client.write_points(measurements, batch_size=1000)
 
 print("Done sending data!")
