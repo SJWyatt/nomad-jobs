@@ -2,7 +2,7 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:190",
+        "$$hashKey": "object:60",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -17,8 +17,7 @@
   "editable": true,
   "gnetId": 11949,
   "graphTooltip": 0,
-  "id": 9,
-  "iteration": 1586540380958,
+  "iteration": 1586541398032,
   "links": [],
   "panels": [
     {
@@ -1393,7 +1392,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586540380958,
+      "repeatIteration": 1586541398032,
       "repeatPanelId": 2,
       "scopedVars": {
         "Fields": {
@@ -1541,7 +1540,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586540380958,
+      "repeatIteration": 1586541398032,
       "repeatPanelId": 2,
       "scopedVars": {
         "Fields": {
@@ -1843,7 +1842,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586540380958,
+      "repeatIteration": 1586541398032,
       "repeatPanelId": 63,
       "scopedVars": {
         "Fields": {
@@ -1999,7 +1998,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586540380958,
+      "repeatIteration": 1586541398032,
       "repeatPanelId": 63,
       "scopedVars": {
         "Fields": {
@@ -2196,9 +2195,9 @@
   },
   "timezone": "",
   "title": "Covid-19 Global",
-  "uid": "H7a-pFmRz3",
+  "uid": "H7a-pFmRz1",
   "variables": {
     "list": []
   },
-  "version": 2
+  "version": 13
 }
