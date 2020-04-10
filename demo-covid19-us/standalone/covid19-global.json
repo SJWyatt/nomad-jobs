@@ -2,7 +2,7 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:60",
+        "$$hashKey": "object:190",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -17,8 +17,8 @@
   "editable": true,
   "gnetId": 11949,
   "graphTooltip": 0,
-  "id": 6,
-  "iteration": 1586477043258,
+  "id": 9,
+  "iteration": 1586540380958,
   "links": [],
   "panels": [
     {
@@ -1393,7 +1393,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586477043258,
+      "repeatIteration": 1586540380958,
       "repeatPanelId": 2,
       "scopedVars": {
         "Fields": {
@@ -1438,7 +1438,7 @@
             [
               {
                 "params": [
-                  "confirmed"
+                  "deaths"
                 ],
                 "type": "field"
               },
@@ -1541,7 +1541,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586477043258,
+      "repeatIteration": 1586540380958,
       "repeatPanelId": 2,
       "scopedVars": {
         "Fields": {
@@ -1586,7 +1586,7 @@
             [
               {
                 "params": [
-                  "confirmed"
+                  "recovered"
                 ],
                 "type": "field"
               },
@@ -1843,7 +1843,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586477043258,
+      "repeatIteration": 1586540380958,
       "repeatPanelId": 63,
       "scopedVars": {
         "Fields": {
@@ -1999,7 +1999,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586477043258,
+      "repeatIteration": 1586540380958,
       "repeatPanelId": 63,
       "scopedVars": {
         "Fields": {
@@ -2195,10 +2195,10 @@
     ]
   },
   "timezone": "",
-  "title": "Covid-19 Global",
-  "uid": "H7a-pFmRz1",
+  "title": "Covid-19 Global-Fix",
+  "uid": "H7a-pFmRz3",
   "variables": {
     "list": []
   },
-  "version": 12
+  "version": 2
 }
