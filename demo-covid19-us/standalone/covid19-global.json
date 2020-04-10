@@ -2,7 +2,7 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:60",
+        "$$hashKey": "object:190",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -17,7 +17,8 @@
   "editable": true,
   "gnetId": 11949,
   "graphTooltip": 0,
-  "iteration": 1586541398032,
+  "id": 9,
+  "iteration": 1586542106704,
   "links": [],
   "panels": [
     {
@@ -1244,15 +1245,8 @@
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "repeat": "Fields",
+      "repeat": null,
       "repeatDirection": "h",
-      "scopedVars": {
-        "Fields": {
-          "selected": false,
-          "text": "confirmed",
-          "value": "confirmed"
-        }
-      },
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
@@ -1312,7 +1306,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Total $Fields",
+      "title": "Total Confirmed",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -1328,6 +1322,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:950",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1336,6 +1331,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:951",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1364,7 +1360,7 @@
         "y": 18
       },
       "hiddenSeries": false,
-      "id": 78,
+      "id": 80,
       "interval": "1d",
       "legend": {
         "alignAsTable": true,
@@ -1390,17 +1386,7 @@
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586541398032,
-      "repeatPanelId": 2,
-      "scopedVars": {
-        "Fields": {
-          "selected": false,
-          "text": "deaths",
-          "value": "deaths"
-        }
-      },
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
@@ -1460,7 +1446,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Total $Fields",
+      "title": "Total Deaths",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -1476,6 +1462,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:950",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1484,6 +1471,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:951",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1512,7 +1500,7 @@
         "y": 18
       },
       "hiddenSeries": false,
-      "id": 79,
+      "id": 81,
       "interval": "1d",
       "legend": {
         "alignAsTable": true,
@@ -1538,17 +1526,7 @@
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586541398032,
-      "repeatPanelId": 2,
-      "scopedVars": {
-        "Fields": {
-          "selected": false,
-          "text": "recovered",
-          "value": "recovered"
-        }
-      },
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
@@ -1608,7 +1586,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Total $Fields",
+      "title": "Total Recovered",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -1624,6 +1602,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:950",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1632,6 +1611,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:951",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1814,7 +1794,7 @@
         "y": 23
       },
       "hiddenSeries": false,
-      "id": 80,
+      "id": 78,
       "interval": "1d",
       "legend": {
         "alignAsTable": true,
@@ -1842,7 +1822,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586541398032,
+      "repeatIteration": 1586542106704,
       "repeatPanelId": 63,
       "scopedVars": {
         "Fields": {
@@ -1970,7 +1950,7 @@
         "y": 23
       },
       "hiddenSeries": false,
-      "id": 81,
+      "id": 79,
       "interval": "1d",
       "legend": {
         "alignAsTable": true,
@@ -1998,7 +1978,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586541398032,
+      "repeatIteration": 1586542106704,
       "repeatPanelId": 63,
       "scopedVars": {
         "Fields": {
@@ -2195,9 +2175,9 @@
   },
   "timezone": "",
   "title": "Covid-19 Global",
-  "uid": "H7a-pFmRz1",
+  "uid": "H7a-pFmRz4",
   "variables": {
     "list": []
   },
-  "version": 13
+  "version": 4
 }
