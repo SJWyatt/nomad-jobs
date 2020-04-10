@@ -19,9 +19,8 @@ IGNORE 1 ROWS;
 CREATE TABLE bases( 
 name varchar(255), 
 state varchar(255), 
-latitude float(10,6), 
-longitude float(10,6),
-value float not null default '1.00',
+geohash varchar(255),
+confirmed float,
 timestamp timestamp not null default current_timestamp on update current_timestamp
 );
 
