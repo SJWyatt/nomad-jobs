@@ -9,6 +9,7 @@ timestamp timestamp not null default current_timestamp on update current_timesta
 );
 
 LOAD DATA INFILE '/local/data/af_bases.csv' INTO TABLE bases 
-FIELDS TERMINATED BY ',' ENCLOSED BY '' 
-LINES TERMINATED BY '\n' 
+FIELDS TERMINATED BY ',' ENCLOSED BY '\'' 
+LINES TERMINATED BY '\n'; 
 IGNORE 1 ROWS;
+
