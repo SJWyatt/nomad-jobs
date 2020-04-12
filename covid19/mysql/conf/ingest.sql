@@ -1,6 +1,5 @@
-SET GLOBAL local_infile = 'ON';
-
-USE DATABASE geolocations;
+CREATE DATABASE geolocations;
+USE geolocations;
 
 CREATE TABLE bases( 
 name varchar(255), 

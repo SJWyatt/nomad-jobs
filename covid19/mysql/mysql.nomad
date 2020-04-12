@@ -5,10 +5,7 @@ job "mysql" {
   group "mysql" {
     task "mysql" {
       driver = "docker"
-      config {
-        image = "mysql"
-      }
-
+      
       env {
         MYSQL_ROOT_PASSWORD = "iamgroot"
         MYSQL_DATABASE = "geolocations"
@@ -16,22 +13,37 @@ job "mysql" {
 
       artifact {
         source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/covid19/mysql/data/af_bases.csv"
-        destination = "/local/data/af_bases.csv"
+        destination = "/local/data/"
+      }
+
+      artifact {
+        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/covid19/mysql/conf/my.cnf"
+        destination = "/local/conf/"
       }
 
       artifact {
         source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/covid19/mysql/conf/ingest.sql"
-        destination = "/docker-entrypoint-initdb.d/"
+        destination = "/local/conf/"
+      }
+
+      config {
+        image = "mysql"
+        volumes = [
+          "local/conf/my.cnf:/etc/mysql/my.cnf",
+          "local/conf/ingest.sql:/docker-entrypoint-initdb.d/ingest.sql"
+        ]
       }
 
       resources {
         cpu    = 2400
-        memory = 500
+        memory = 1024
+
         network {
           mbits = 10
           mode = "host"
           port "http" {}
         }
+
       }
 
     }
