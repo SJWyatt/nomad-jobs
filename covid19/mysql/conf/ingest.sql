@@ -9,6 +9,7 @@ timestamp timestamp not null default current_timestamp on update current_timesta
 );
 
 LOAD DATA INFILE '/local/data/af_bases.csv' 
-INTO TABLE bases (name, state, geohash, confirmed)
+INTO TABLE bases
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'; 
+LINES TERMINATED BY '\n'
+(name, state, geohash, confirmed);
