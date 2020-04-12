@@ -1,4 +1,3 @@
-CREATE DATABASE geolocations;
 USE geolocations;
 
 CREATE TABLE bases( 
@@ -9,7 +8,7 @@ confirmed float,
 timestamp timestamp not null default current_timestamp on update current_timestamp
 );
 
-LOAD DATA LOCAL INFILE '/local/data/af_bases.csv' INTO TABLE bases 
+LOAD DATA LOCAL INFILE '/var/lib/mysql-files/af_bases.csv' INTO TABLE bases 
 FIELDS TERMINATED BY ',' ENCLOSED BY '' 
 LINES TERMINATED BY '\n' 
 IGNORE 1 ROWS;

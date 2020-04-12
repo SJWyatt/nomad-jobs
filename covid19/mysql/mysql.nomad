@@ -16,10 +16,10 @@ job "mysql" {
         destination = "/local/data/"
       }
 
-      artifact {
-        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/covid19/mysql/conf/my.cnf"
-        destination = "/local/conf/"
-      }
+      // artifact {
+      //   source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/covid19/mysql/conf/my.cnf"
+      //   destination = "/local/conf/"
+      // }
 
       artifact {
         source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/covid19/mysql/conf/ingest.sql"
@@ -28,10 +28,12 @@ job "mysql" {
 
       config {
         image = "mysql"
+
         volumes = [
-          "local/conf/my.cnf:/etc/mysql/my.cnf",
-          "local/conf/ingest.sql:/docker-entrypoint-initdb.d/ingest.sql"
+          "local/conf/ingest.sql:/docker-entrypoint-initdb.d/ingest.sql",
+          "local/data/af_bases.csv:/var/lib/mysql-files/af_bases.csv"
         ]
+
       }
 
       resources {
