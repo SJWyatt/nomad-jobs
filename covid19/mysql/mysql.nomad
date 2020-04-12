@@ -31,7 +31,7 @@ job "mysql" {
 
         volumes = [
           // "local/conf/ingest.sql:/docker-entrypoint-initdb.d/ingest.sql",
-          "local/data/af_bases.csv:/var/lib/mysql/af_bases.csv",
+          // "local/data/af_bases.csv:/var/lib/mysql/af_bases.csv",
           "local/conf/my.cnf:/etc/mysql/my.cnf"
         ]
       }
