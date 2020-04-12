@@ -25,10 +25,9 @@ job "mysql" {
         image = "mysql"
 
         volumes = [
-          "local/conf/ingest.sql:/docker-entrypoint-initdb.d/ingest.sql",
-          "local/data/af_bases.csv:/var/lib/mysql-files/af_bases.csv"
+          // "local/conf/ingest.sql:/docker-entrypoint-initdb.d/ingest.sql",
+          "local/data/af_bases.csv:/var/lib/mysql/af_bases.csv"
         ]
-
       }
 
       resources {
