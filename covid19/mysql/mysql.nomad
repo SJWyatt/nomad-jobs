@@ -16,11 +16,6 @@ job "mysql" {
         destination = "/local/data/"
       }
 
-      // artifact {
-      //   source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/covid19/mysql/conf/my.cnf"
-      //   destination = "/local/conf/"
-      // }
-
       artifact {
         source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/covid19/mysql/conf/ingest.sql"
         destination = "/local/conf/"
