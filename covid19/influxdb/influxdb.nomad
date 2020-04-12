@@ -34,8 +34,8 @@ job "influxdb" {
       }
 
       resources {
-        cpu = 2000 
-        memory = 1024 
+        cpu = 5000 
+        memory = 1025 
         network {
           mbits = 100
           port "http" {

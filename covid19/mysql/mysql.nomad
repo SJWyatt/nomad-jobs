@@ -16,7 +16,7 @@ job "mysql" {
 
       artifact {
         source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/covid19/mysql/data/af_bases.csv"
-        destination = "/var/lib/mysql-files/af_bases.csv"
+        destination = "/local/data/af_bases.csv"
       }
 
       artifact {

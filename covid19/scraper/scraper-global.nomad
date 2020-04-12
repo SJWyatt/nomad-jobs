@@ -1,4 +1,4 @@
-job "scraper-global" {
+job "scraper-global-periodic" {
 	datacenters = ["dc1"]
   type = "batch"
 
@@ -35,7 +35,7 @@ EOH
         volumes = [
           "local/scripts/covid19-global.py:/root/covid19.py"
         ]
-        // command = "/bin/bash"
+        command = "/bin/bash"
         // args = [
         //   "-c", "while true; do echo 'Waiting...'; sleep 5; done"
         // ]
