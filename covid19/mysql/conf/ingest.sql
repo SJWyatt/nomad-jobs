@@ -8,7 +8,7 @@ confirmed float,
 timestamp timestamp not null default current_timestamp on update current_timestamp
 );
 
-LOAD DATA LOCAL INFILE '/var/lib/mysql/af_bases.csv' INTO TABLE bases 
+LOAD DATA INFILE '/var/lib/mysql/af_bases.csv' INTO TABLE bases 
 FIELDS TERMINATED BY ',' ENCLOSED BY '' 
 LINES TERMINATED BY '\n' 
 IGNORE 1 ROWS;

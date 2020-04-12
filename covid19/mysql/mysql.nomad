@@ -21,12 +21,18 @@ job "mysql" {
         destination = "/local/conf/"
       }
 
+      artifact {
+        source      = "https://raw.githubusercontent.com/xaviermerino/nomad-jobs/master/covid19/mysql/conf/my.cnf"
+        destination = "/local/conf/"
+      }
+
       config {
         image = "mysql"
 
         volumes = [
           // "local/conf/ingest.sql:/docker-entrypoint-initdb.d/ingest.sql",
-          "local/data/af_bases.csv:/var/lib/mysql/af_bases.csv"
+          "local/data/af_bases.csv:/var/lib/mysql/af_bases.csv",
+          "local/conf/my.cnf:/etc/mysql/my.cnf"
         ]
       }
 
