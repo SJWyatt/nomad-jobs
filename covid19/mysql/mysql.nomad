@@ -9,6 +9,7 @@ job "mysql" {
       env {
         MYSQL_ROOT_PASSWORD = "iamgroot"
         MYSQL_DATABASE = "geolocations"
+        MYSQL_ROOT_HOST= "%"
       }
 
       artifact {
@@ -33,6 +34,10 @@ job "mysql" {
           "local/conf/ingest.sql:/docker-entrypoint-initdb.d/ingest.sql",
           "local/conf/my.cnf:/etc/mysql/my.cnf"
         ]
+
+        port_map {
+          http = 3306
+        }
       }
 
       resources {
@@ -40,9 +45,11 @@ job "mysql" {
         memory = 1024
 
         network {
-          mbits = 10
+          mbits = 100
           mode = "host"
-          port "http" {}
+          port "http" {
+            static = 3306
+          }
         }
 
       }
