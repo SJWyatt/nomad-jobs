@@ -1,0 +1,42 @@
+# config file version
+apiVersion: 1
+
+# list of datasources to insert/update depending
+# whats available in the database
+datasources:
+
+- name: InfluxDB
+  type: influxdb
+  access: proxy
+  database: covid19
+  user: 
+  url: http://localhost:8086
+  jsonData:
+    timeInterval: "15s"
+  secureJsonData:
+    password: 
+
+- name: InfluxDBGlobal
+  type: influxdb
+  access: proxy
+  database: covid19global
+  user: 
+  url: http://localhost:8086
+  jsonData:
+    timeInterval: "15s"
+  secureJsonData:
+    password: 
+
+- name: MySQL
+  type: mysql
+  access: proxy
+  database: geolocations
+  user: root
+  url: http://localhost:8086
+  secureJsonData:
+    password: iamgroot
+
+- name: JSON
+  type: json
+  access: proxy
+  url: http://localhost:5000
