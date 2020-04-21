@@ -32,7 +32,7 @@ datasources:
   access: proxy
   database: geolocations
   user: root
-  url: http://localhost:8086
+  url: http://localhost:3306
   secureJsonData:
     password: iamgroot
 
