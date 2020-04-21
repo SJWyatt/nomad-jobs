@@ -37,6 +37,6 @@ datasources:
     password: iamgroot
 
 - name: JSON
-  type: json
+  type: simpod-json-datasource
   access: proxy
   url: http://localhost:5000
