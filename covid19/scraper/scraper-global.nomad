@@ -17,7 +17,7 @@ job "scraper-global-periodic" {
         data = <<EOH
 INFLUX_HOST = {{ range service "influxdb" }}{{ .Address }}{{ end }}
 INFLUX_DB = "covid19global"
-INFLUX_DBPORT = 8086
+INFLUX_DBPORT = {{ range service "influxdb" }}{{ .Port }}{{ end }}
 INFLUX_USER = ""
 INFLUX_PASS = ""
 EOH
