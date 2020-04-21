@@ -26,3 +26,17 @@ datasources:
     timeInterval: "15s"
   secureJsonData:
     password: 
+
+- name: MySQL
+  type: mysql
+  access: proxy
+  database: geolocations
+  user: root
+  url: http://{{ range service "mysql" }}{{ .Address }}:{{ .Port }}{{ end }}
+  secureJsonData:
+    password: iamgroot
+
+- name: JSON
+  type: simpod-json-datasource
+  access: proxy
+  url: http://{{ range service "json-sir" }}{{ .Address }}:{{ .Port }}{{ end }}

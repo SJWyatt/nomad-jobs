@@ -39,4 +39,4 @@ datasources:
 - name: JSON
   type: simpod-json-datasource
   access: proxy
-  url: http://localhost:5000
+  url: http://localhost:1270
