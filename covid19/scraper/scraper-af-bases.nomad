@@ -40,8 +40,7 @@ EOH
 
         // Name does not change because container hard-coded for covid19.py
         volumes = [
-          "local/scripts/af-bases.py:/root/covid19.py",
-          "local/data/af_bases.csv:/root/af_bases.csv"
+          "local/scripts/af-bases.py:/root/covid19.py"
         ]
         command = "/bin/bash"
         args = [

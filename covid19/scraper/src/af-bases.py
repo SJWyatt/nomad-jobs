@@ -35,7 +35,7 @@ GMT = Zone(0, False, 'GMT')
 measurements = []
 measurements_hash = {}
 
-input_file = csv.DictReader(open('af_bases.csv'))
+input_file = csv.DictReader(open('/local/data/af_bases.csv'))
 
 for record in input_file:
     today = datetime.today().replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT).timestamp()
