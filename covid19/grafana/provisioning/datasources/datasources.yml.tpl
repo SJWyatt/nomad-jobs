@@ -39,4 +39,4 @@ datasources:
 - name: JSON
   type: simpod-json-datasource
   access: proxy
-  url: http://{{ range service "json-sir" }}{{ .Address }}:{{ .Port }}{{ end }}
+  url: http://{{ range service "sir" }}{{ .Address }}:{{ .Port }}{{ end }}

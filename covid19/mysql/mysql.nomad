@@ -47,9 +47,7 @@ job "mysql" {
         network {
           mbits = 100
           mode = "host"
-          port "http" {
-            static = 3306
-          }
+          port "http" {}
         }
 
       }
