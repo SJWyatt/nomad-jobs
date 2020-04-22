@@ -69,7 +69,7 @@ for i in sorted(inputfiles.keys()):
             elif field == "deaths":
                 # Deaths has an extra Population record
                 datekeys = len(record) - 12 
-                population = record['Population'].strip()
+                population = float(record['Population'].strip())
 
             for k in sorted(record.keys())[:datekeys]:    
                 datemdy = datetime.strptime(k, '%m/%d/%y').replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT).timestamp()

@@ -43,10 +43,10 @@ EOH
           "local/scripts/af-bases.py:/root/covid19.py",
           "local/data/af_bases.csv:/root/af_bases.csv"
         ]
-        // command = "/bin/bash"
-        // args = [
-        //   "-c", "while true; do echo 'Waiting...'; sleep 5; done"
-        // ]
+        command = "/bin/bash"
+        args = [
+          "-c", "while true; do echo 'Waiting...'; sleep 5; done"
+        ]
       }
 
       resources {
