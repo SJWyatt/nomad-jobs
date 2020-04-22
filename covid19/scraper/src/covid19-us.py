@@ -1,10 +1,3 @@
-#Ingest Data from JHU CCSE Covid19 Repository https://github.com/CSSEGISandData/COVID-19
-#Confirmed
-#https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv
-#Deaths
-#https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv
-#Recovered
-#https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv
 import csv
 import requests
 import itertools
