@@ -1,4 +1,4 @@
-job "scraper-us" {
+job "scraper-us-periodic" {
   datacenters = ["dc1"]
   type = "batch"
 
