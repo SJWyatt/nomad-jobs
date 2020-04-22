@@ -21,20 +21,14 @@ job "geojson" {
         memory = 500 
         network {
           mbits = 100
-          mode = "host"
+          mode = "bridge"
+          port "http" {}
         }
       }
 
       service {
         name = "geojson"
         port = "http"
-        check {
-          name     = "GeoJSON Health Check"
-          type     = "http"
-          path     = "/"
-          interval = "5s"
-          timeout  = "2s"
-        }
       }
 
 		} # End task

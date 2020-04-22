@@ -21,7 +21,8 @@ job "sir" {
         memory = 500 
         network {
           mbits = 100
-          mode = "host"
+          mode = "bridge"
+          port "http" {}
         }
       }
 

@@ -52,6 +52,11 @@ job "mysql" {
 
       }
 
+      service {
+        name = "mysql"
+        port = "http"
+      }
+
     }
   }
 }
