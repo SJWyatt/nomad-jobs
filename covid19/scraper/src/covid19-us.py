@@ -62,17 +62,18 @@ for i in sorted(inputfiles.keys()):
         results = []
         for record in wrapper:
             today = datetime.today().replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT).timestamp()
-            country = record['Country_Region']
-            state = record['Province_State']
-            county = record['Admin2']    
-            location_hash = record['Combined_Key']
+            country = record['Country_Region'].strip()
+            state = record['Province_State'].strip()
+            county = record['Admin2'].strip()    
+            location_hash = record['Combined_Key'].strip()
+            fips = record['FIPS'].strip()
 
             if field == "confirmed":
                 datekeys = len(record) - 11
             elif field == "deaths":
                 # Deaths has an extra Population record
                 datekeys = len(record) - 12 
-                population = record['Population']
+                population = record['Population'].strip()
 
             for k in sorted(record.keys())[:datekeys]:    
                 datemdy = datetime.strptime(k, '%m/%d/%y').replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT).timestamp()
@@ -89,7 +90,8 @@ for i in sorted(inputfiles.keys()):
                     measurements_hash[time_loc_hash]['tags']['country'] = country
                     measurements_hash[time_loc_hash]['tags']['state'] = state.strip()
                     measurements_hash[time_loc_hash]['tags']['county'] = county.strip()
-                    measurements_hash[time_loc_hash]['tags']['geohash'] = geohash.encode(float(record['Lat']),float(record['Long_'])) # Generate Geohash for use with Grafana Plugin
+                    measurements_hash[time_loc_hash]['tags']['geohash'] = geohash.encode(float(record['Lat'].strip()),float(record['Long_'].strip())) # Generate Geohash for use with Grafana Plugin
+                    measurements_hash[time_loc_hash]['tags']['fips'] = fips
 
                 try:
                     measurements_hash[time_loc_hash]['fields'][field] = int(record[k]) 
@@ -98,7 +100,7 @@ for i in sorted(inputfiles.keys()):
                 
                 try:
                     if field == "deaths":
-                        measurements_hash[time_loc_hash]['fields']['population'] = int(record['Population'])
+                        measurements_hash[time_loc_hash]['fields']['population'] = population
                 except ValueError:
                     measurements_hash[time_loc_hash]['fields']['population'] = 0 
 
