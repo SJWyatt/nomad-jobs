@@ -67,6 +67,12 @@ for i in sorted(inputfiles.keys()):
             county = record['Admin2'].strip()    
             location_hash = record['Combined_Key'].strip()
             fips = record['FIPS'].strip()
+            latitude = record['Lat'].strip()
+            longitude = record['Long_'].strip() 
+
+            if not(latitude.isnumeric() and longitude.isnumeric()):
+                # If latitude and longitude are missing then ignore!
+                continue
 
             if field == "confirmed":
                 datekeys = len(record) - 11

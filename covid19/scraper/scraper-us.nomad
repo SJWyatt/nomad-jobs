@@ -35,10 +35,10 @@ EOH
         volumes = [
           "local/scripts/covid19-us.py:/root/covid19.py"
         ]
-        // command = "/bin/bash"
-        // args = [
-        //   "-c", "while true; do echo 'Waiting...'; sleep 5; done"
-        // ]
+        command = "/bin/bash"
+        args = [
+          "-c", "while true; do echo 'Waiting...'; sleep 5; done"
+        ]
       }
 
       resources {
