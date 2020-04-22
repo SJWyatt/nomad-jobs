@@ -2,10 +2,10 @@ job "scraper-global-periodic" {
 	datacenters = ["dc1"]
   type = "batch"
 
-  periodic {
-    cron = "*/15 * * * *"
-    prohibit_overlap = true
-  }
+  // periodic {
+  //   cron = "*/15 * * * *"
+  //   prohibit_overlap = true
+  // }
 
   group "scraper" {
     count = 1
@@ -46,7 +46,7 @@ EOH
         memory = 500 
         network {
           mbits = 100
-          mode = "host"
+          mode = "bridge"
         }
       }
 
