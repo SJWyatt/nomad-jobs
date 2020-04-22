@@ -27,14 +27,16 @@ datasources:
   secureJsonData:
     password: 
 
-- name: MySQL
-  type: mysql
+- name: InfluxDBBases
+  type: influxdb
   access: proxy
-  database: geolocations
-  user: root
-  url: http://{{ range service "mysql" }}{{ .Address }}:{{ .Port }}{{ end }}
+  database: bases
+  user: 
+  url: http://{{ range service "influxdb" }}{{ .Address }}:{{ .Port }}{{ end }}
+  jsonData:
+    timeInterval: "15s"
   secureJsonData:
-    password: iamgroot
+    password: 
 
 - name: JSON
   type: simpod-json-datasource
