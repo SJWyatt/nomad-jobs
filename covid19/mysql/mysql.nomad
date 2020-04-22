@@ -41,7 +41,7 @@ job "mysql" {
       }
 
       resources {
-        cpu    = 2400
+        cpu    = 1000
         memory = 1024
 
         network {
