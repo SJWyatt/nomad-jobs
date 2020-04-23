@@ -42,15 +42,15 @@ EOH
         volumes = [
           "local/scripts/af-bases.py:/root/covid19.py"
         ]
-        command = "/bin/bash"
-        args = [
-          "-c", "while true; do echo 'Waiting...'; sleep 5; done"
-        ]
+        // command = "/bin/bash"
+        // args = [
+        //   "-c", "while true; do echo 'Waiting...'; sleep 5; done"
+        // ]
       }
 
       resources {
-        cpu = 1000 
-        memory = 500 
+        cpu = 2000 
+        memory = 1024 
         network {
           mbits = 100
           mode = "bridge"

@@ -18,7 +18,7 @@ job "geojson" {
 
       resources {
         cpu = 1000 
-        memory = 500 
+        memory = 1024 
         network {
           mbits = 100
           mode = "bridge"

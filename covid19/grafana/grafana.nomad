@@ -34,10 +34,10 @@ job "grafana" {
       }
 
       resources {
-        cpu    = 2000
-        memory = 1024
+        cpu    = 4000
+        memory = 4096
         network {
-          mbits = 10
+          mbits = 100
           mode = "host"
           port "http" {}
         }
