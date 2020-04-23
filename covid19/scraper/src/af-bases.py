@@ -40,7 +40,7 @@ input_file = csv.DictReader(open('/local/data/af_bases.csv'))
 for record in input_file:
     today = datetime.today().replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT).timestamp()
     name = record['name'].strip()
-    state = record['state'].strip()
+    # state = record['state'].strip()
     geohash = record['geohash'].strip()
     confirmed = -1 #record[3].strip()
     radius_interest = 50
@@ -51,10 +51,10 @@ for record in input_file:
                                                 'time': int(today) * 1000 * 1000 * 1000
                                                 }
 
-    measurements_hash[geohash]['tags']['state'] = state.strip()
+    # measurements_hash[geohash]['tags']['state'] = state.strip()
     measurements_hash[geohash]['tags']['geohash'] = geohash
-    measurements_hash[geohash]['fields']['name'] = name
-    measurements_hash[geohash]['fields']['radius_interest'] = radius_interest
+    measurements_hash[geohash]['tags']['location'] = name
+    measurements_hash[geohash]['tags']['radius'] = radius_interest
 
     # The number needed for the map to display it!
     measurements_hash[geohash]['fields']['confirmed'] = confirmed
