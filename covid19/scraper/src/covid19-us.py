@@ -64,6 +64,12 @@ for i in sorted(inputfiles.keys()):
             if not fips:
                 continue
 
+            try:
+                lat = float(record['Lat'].strip())
+                lon = float(record['Long_'].strip())
+            except:
+                continue
+
             if field == "confirmed":
                 datekeys = len(record) - 11
             elif field == "deaths":
@@ -86,7 +92,7 @@ for i in sorted(inputfiles.keys()):
                     measurements_hash[time_loc_hash]['tags']['country'] = country
                     measurements_hash[time_loc_hash]['tags']['state'] = state.strip()
                     measurements_hash[time_loc_hash]['tags']['county'] = county.strip()
-                    measurements_hash[time_loc_hash]['tags']['geohash'] = geohash.encode(float(record['Lat'].strip()),float(record['Long_'].strip())) # Generate Geohash for use with Grafana Plugin
+                    measurements_hash[time_loc_hash]['tags']['geohash'] = geohash.encode(lat,lon) # Generate Geohash for use with Grafana Plugin
                     measurements_hash[time_loc_hash]['tags']['fips'] = fips
 
                 try:

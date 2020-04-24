@@ -31,15 +31,18 @@ job "grafana" {
       template {
         source = "local/provisioning/datasources/datasources.yml.tpl"
         destination = "local/provisioning/datasources/datasources.yml"
+        change_mode = "noop"
       }
 
       resources {
         cpu    = 4000
-        memory = 4096
+        memory = 6000
         network {
           mbits = 100
           mode = "host"
-          port "http" {}
+          port "http" {
+            static = 3000
+          }
         }
       }
 

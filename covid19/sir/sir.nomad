@@ -17,8 +17,8 @@ job "sir" {
       }
 
       resources {
-        cpu = 1000 
-        memory = 500 
+        cpu = 4000 
+        memory = 4096 
         network {
           mbits = 100
           mode = "bridge"
