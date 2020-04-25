@@ -12,8 +12,6 @@ import traceback
 import json
 from mapquery import MapQuery
 
-
-
 INFLUX_HOST = os.environ['INFLUX_HOST']
 INFLUX_PORT =  os.environ['INFLUX_DBPORT']
 military_view = MapQuery(INFLUX_HOST, INFLUX_PORT)
@@ -74,26 +72,39 @@ class Query:
             
             # print("Get data from %s to %s"%(fromDate, toDate))
             # print("%d number of points at %dms intervals."%(maxPoints, interval))
-            print("States:",states,"Counties:",counties)
+            print("States:", states, "Counties:",counties)
             # print("Targets",targets)
 
             # stats = get_data(fromDate, toDate, maxPoints, interval, states, counties, targets)
 
             # ignore what the user says they want, we're giving them what we want to.
-            military_data = {
-                'name':"covid19",
-                "columns":[
-                    {"text": "Time", "type":"time"},
-                    {"text": "Confirmed", "type":"number"},
-                    {"text": "geohash", "type": "string"},
-                    {"text": "location", "type": "string"},
-                    {"text": "state", "type": "string"}
-                ],
-                "rows":[],
-                "type":"table"
-            }
+            # military_data = [{
+            #     # 'name':"Covid19 Military View",
+            #     "columns":[
+            #         "time",
+            #         "Confirmed",
+            #         "geohash",
+            #         "location",
+            #         "state"
+            #     ],
+            #     "rows": [],
+            #     "type":"table"
+            # }]
+            # military_data[0]['rows'] = military_view.get_military_table_output()
 
-            military_data['rows'] = military_view.get_military_table_output()
+            military_data = [{
+                # 'name':"Covid19 Military View",
+                "columns":[
+                    {"text":"time","type":"time"},
+                    {"text":"Confirmed","type":"number"},
+                    {"text":"geohash","type":"string"},
+                    {"text":"location","type":"string"},
+                    {"text":"state","type":"string"}
+                ],
+                "rows": [],
+                "type":"table"
+            }]
+            military_data[0]['rows'] = military_view.get_military_table_output()
 
         except Exception as e:
             print("Query Exception:", e)

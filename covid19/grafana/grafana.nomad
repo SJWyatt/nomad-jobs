@@ -15,7 +15,7 @@ job "grafana" {
         GF_LOG_MODE = "console"
         GF_SERVER_HTTP_PORT = "${NOMAD_PORT_http}"
         GF_PATHS_PROVISIONING = "/local/provisioning"
-        GF_INSTALL_PLUGINS = "grafana-worldmap-panel,simpod-json-datasource,grafana-map-panel"
+        GF_INSTALL_PLUGINS = "grafana-worldmap-panel,simpod-json-datasource,https://packages.hiveeyes.org/grafana/grafana-map-panel/grafana-map-panel-0.9.0.zip;grafana-map-panel"
       }
 
       artifact {
