@@ -57,6 +57,11 @@ EOH
         }
       }
 
+      service {
+        name = "milview"
+        port = "http"
+      }
+
 		} # End task
 
 	} # End group
