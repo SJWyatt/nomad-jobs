@@ -42,3 +42,8 @@ datasources:
   type: simpod-json-datasource
   access: proxy
   url: http://{{ range service "sir" }}{{ .Address }}:{{ .Port }}{{ end }}
+
+- name: MilView
+  type: simpod-json-datasource
+  access: proxy
+  url: http://{{ range service "milview" }}{{ .Address }}:{{ .Port }}{{ end }}

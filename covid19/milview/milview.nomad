@@ -11,7 +11,7 @@ job "milview" {
       template {
         data = <<EOH
 INFLUX_HOST = {{ range service "influxdb" }}{{ .Address }}{{ end }}
-INFLUX_PORT = {{ range service "influxdb" }}{{ .Port }}{{ end }}
+INFLUX_DBPORT = {{ range service "influxdb" }}{{ .Port }}{{ end }}
 EOH
         destination = "secrets/environment.env"
         env = true
@@ -19,7 +19,7 @@ EOH
 
       artifact {
         source      = "github.com/xaviermerino/nomad-jobs/covid19/milview/src"
-        destination = "/root/"
+        destination = "/local/scripts/"
       }
       
       config {
@@ -28,6 +28,20 @@ EOH
         args = [
           "-b", "0.0.0.0:5050", "map-api:app", "-w", "1"
         ]
+
+        // command = "/bin/bash"
+        // args = [
+        //   "-c", "while true; do echo 'Waiting...'; sleep 5; done"
+        // ]
+
+        volumes = [
+          "local/scripts/map-api.py:/root/map-api.py",
+          "local/scripts/mapquery.py:/root/mapquery.py"
+        ]
+
+        port_map {
+          http = 5050
+        }
       }
 
       resources {
@@ -36,6 +50,10 @@ EOH
         network {
           mbits = 100
           mode = "bridge"
+          port "http" {
+            # dev mode
+            static = 5050
+          }
         }
       }
 
