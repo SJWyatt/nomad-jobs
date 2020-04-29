@@ -39,15 +39,19 @@ EOH
           "local/scripts/sir.py:/root/sir.py",
           "local/scripts/sirquery.py:/root/sirquery.py",
           "local/scripts/api_military.py:/root/api_military.py",
-          "local/data/api_sir_model.csv:/root/api_sir_model.csv",
-          "local/data/full_state_sir.csv:/root/full_state_sir.csv",
-          "local/data/resource_usage.csv:/root/resource_usage.csv",
-          "local/data/sir_model.csv:/root/sir_model.csv"
+          "local/data/api_sir_model.csv:/root/Data/api_sir_model.csv",
+          "local/data/full_state_sir.csv:/root/Data/full_state_sir.csv",
+          "local/data/resource_usage.csv:/root/Data/resource_usage.csv",
+          "local/data/sir_model.csv:/root/Data/sir_model.csv"
         ]
 
-        command = "gunicorn"
+        // command = "gunicorn"
+        // args = [
+        //   "-b", "0.0.0.0:5050", "api_military:app", "-w", "1"
+        // ]
+        command = "/bin/bash"
         args = [
-          "-b", "0.0.0.0:5050", "api_military:app", "-w", "1"
+          "-c", "while true; do echo 'Waiting...'; sleep 5; done"
         ]
       }
 
