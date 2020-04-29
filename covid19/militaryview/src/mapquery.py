@@ -35,6 +35,7 @@ class MapQuery:
         # Creating time constraints
 
         query = "SELECT * FROM covid19 WHERE geohash =~ {0} AND time > '{1}' - 1d".format(expanded_geohash, range_to)
+        print(query)
         results = self.client.query(query).get_points()
 
         table_output = []
