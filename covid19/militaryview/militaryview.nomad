@@ -51,7 +51,7 @@ EOH
 
         command = "gunicorn"
         args = [
-          "-b", "0.0.0.0:5050", "api_military:app", "-w", "1", "--timeout", "10000"
+          "-b", "0.0.0.0:5050", "api_military:app", "-w", "1", "--timeout", "70"
         ]
         // command = "/bin/bash"
         // args = [
@@ -61,7 +61,7 @@ EOH
 
       resources {
         cpu = 2500 
-        memory = 512 
+        memory = 1024 
         network {
           mbits = 100
           mode = "bridge"

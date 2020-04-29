@@ -14,17 +14,17 @@ from falcon.http_status import HTTPStatus
 from mapquery import MapQuery
 from sirquery import SIRQuery
 
-print("Initalizing military_view...")
+print("Initalizing military_view...", flush=True)
 start_init = time.time()
 INFLUX_HOST = os.environ['INFLUX_HOST']
 INFLUX_PORT = os.environ['INFLUX_DBPORT']
 military_view = MapQuery(INFLUX_HOST, INFLUX_PORT)
-print(f"Initalized! ({time.time() - start_init:.02f}s)")
+print(f"Initalized! ({time.time() - start_init:.02f}s)", flush=True)
 
 print("Initalizing sirquery...")
 start_init = time.time()
 sir_query = SIRQuery()
-print(f"Initalized! ({time.time() - start_init:.02f}s)")
+print(f"Initalized! ({time.time() - start_init:.02f}s)", flush=True)
 
 class Server_Check:
     def on_get(self, req, resp):
@@ -174,4 +174,4 @@ app.add_route('/annotations', Annotations())
 
 # to start the application run with:
 # gunicorn -b 0.0.0.0:5050 api_military:app -w 1 --timeout 10000
-print("Ready!")
+print("Ready!", flush=True)
