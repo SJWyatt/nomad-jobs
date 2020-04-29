@@ -9,4 +9,3 @@ pygeohash
 influxdb
 scipy
 matplotlib
-gunicorn

@@ -9,7 +9,8 @@ import numpy as np
 import pandas as pd
 from haversine import Unit, haversine
 
-import geohash
+# import geohash
+from geohash import encode
 from LocationResolver import LocationResolver
 from sir import calculate_sir
 
@@ -226,7 +227,7 @@ class SIRQuery:
                     except AttributeError:
                         log = float(row['Long_'])
 
-                    county_geohash = geohash.encode(lat,log) # Generate Geohash for use with Grafana Plugin
+                    county_geohash = encode(lat,log) # Generate Geohash for use with Grafana Plugin
                 except Exception as e:
                     print("Error Getting Geohash: ", e)
                     # traceback.print_exc()
