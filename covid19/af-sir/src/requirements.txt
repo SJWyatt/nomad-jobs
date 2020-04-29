@@ -1,0 +1,12 @@
+haversine
+falcon
+pandas
+numpy
+filetype
+tqdm
+geohash
+pygeohash
+influxdb
+scipy
+matplotlib
+gunicorn
