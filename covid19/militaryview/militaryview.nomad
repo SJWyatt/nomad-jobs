@@ -45,14 +45,14 @@ EOH
           "local/data/sir_model.csv:/root/Data/sir_model.csv"
         ]
 
-        // command = "gunicorn"
-        // args = [
-        //   "-b", "0.0.0.0:5050", "api_military:app", "-w", "1"
-        // ]
-        command = "/bin/bash"
+        command = "gunicorn"
         args = [
-          "-c", "while true; do echo 'Waiting...'; sleep 5; done"
+          "-b", "0.0.0.0:5050", "api_military:app", "-w", "1"
         ]
+        // command = "/bin/bash"
+        // args = [
+        //   "-c", "while true; do echo 'Waiting...'; sleep 5; done"
+        // ]
       }
 
       resources {
