@@ -38,12 +38,7 @@ datasources:
   secureJsonData:
     password: 
 
-- name: JSON
+- name: MilitaryViewAPI
   type: simpod-json-datasource
   access: proxy
-  url: http://{{ range service "sir" }}{{ .Address }}:{{ .Port }}{{ end }}
-
-- name: MilView
-  type: simpod-json-datasource
-  access: proxy
-  url: http://{{ range service "milview" }}{{ .Address }}:{{ .Port }}{{ end }}
+  url: http://{{ range service "api-militaryview" }}{{ .Address }}:{{ .Port }}{{ end }}
