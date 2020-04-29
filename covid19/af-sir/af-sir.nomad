@@ -1,11 +1,11 @@
-job "af-sir" {
+job "scraper-af-sir-periodic" {
 	datacenters = ["dc1"]
   type = "service"
 
-  group "af-sir" {
+  group "scraper-af-sir-periodic" {
     count = 1
 
-		task "af-sir" {
+		task "scraper-af-sir-periodic" {
       driver = "docker"
 
       template {
