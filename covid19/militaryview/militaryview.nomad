@@ -39,6 +39,10 @@ EOH
           "local/scripts/sir.py:/root/sir.py",
           "local/scripts/sirquery.py:/root/sirquery.py",
           "local/scripts/api_military.py:/root/api_military.py",
+          "local/data/api_sir_model.csv:/root/api_sir_model.csv",
+          "local/data/full_state_sir.csv:/root/full_state_sir.csv",
+          "local/data/resource_usage.csv:/root/resource_usage.csv",
+          "local/data/sir_model.csv:/root/sir_model.csv"
         ]
 
         command = "gunicorn"
@@ -48,8 +52,8 @@ EOH
       }
 
       resources {
-        cpu = 2000 
-        memory = 1024 
+        cpu = 2500 
+        memory = 512 
         network {
           mbits = 100
           mode = "bridge"

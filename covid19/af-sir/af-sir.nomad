@@ -1,6 +1,11 @@
 job "scraper-af-sir-periodic" {
 	datacenters = ["dc1"]
-  type = "service"
+  type = "batch"
+
+  periodic {
+    cron = "*/30 * * * *"
+    prohibit_overlap = true
+  }
 
   group "scraper-af-sir-periodic" {
     count = 1
@@ -43,15 +48,15 @@ EOH
           "local/scripts/sirquery.py:/root/sirquery.py",
         ]
 
-        command = "/bin/bash"
+        command = "python"
         args = [
-          "-c", "while true; do echo 'Waiting...'; sleep 5; done"
+          "ingest_military.py"
         ]
       }
 
       resources {
-        cpu = 2000 
-        memory = 1024 
+        cpu = 2500 
+        memory = 512 
         network {
           mbits = 100
           mode = "bridge"

@@ -49,8 +49,8 @@ EOH
       }
 
       resources {
-        cpu = 2000 
-        memory = 1024 
+        cpu = 1000 
+        memory = 512 
         network {
           mbits = 100
           mode = "bridge"
