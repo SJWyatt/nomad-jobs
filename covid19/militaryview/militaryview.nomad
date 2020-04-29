@@ -30,6 +30,10 @@ EOH
       config {
         image = "xaviermerino/covid-af-sir:latest"
 
+        port_map {
+          http = 5050
+        }
+
         volumes = [
           "local/data/census/PEP_2018_PEPAGESEX_with_ann.csv:/root/Data/census/PEP_2018_PEPAGESEX_with_ann.csv",
           "local/data/covid_kaggle/usa_county_wise.csv:/root/Data/covid_kaggle/usa_county_wise.csv",
@@ -47,12 +51,12 @@ EOH
 
         command = "gunicorn"
         args = [
-          "-b", "0.0.0.0:5050", "api_military:app", "-w", "1"
+          "-b", "0.0.0.0:5050", "api_military:app", "-w", "1", "--timeout", "10000"
         ]
         // command = "/bin/bash"
         // args = [
         //   "-c", "while true; do echo 'Waiting...'; sleep 5; done"
-        // ]
+        // ]        
       }
 
       resources {
@@ -61,10 +65,16 @@ EOH
         network {
           mbits = 100
           mode = "bridge"
+          port "http" {
+            static = 5050
+          }
         }
       }
 
-      
+      service {
+        name = "api-militaryview"
+        port = "http"
+      }
 
 		} # End task
 
