@@ -51,7 +51,7 @@ EOH
 
         command = "gunicorn"
         args = [
-          "-b", "0.0.0.0:5050", "api_military:app", "-w", "1", "--timeout", "70"
+          "-b", "0.0.0.0:5050", "api_military:app", "-w", "1", "--timeout", "80"
         ]
         // command = "/bin/bash"
         // args = [
