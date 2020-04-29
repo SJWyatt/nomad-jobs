@@ -38,6 +38,17 @@ datasources:
   secureJsonData:
     password: 
 
+- name: AFBaseSIR
+  type: influxdb
+  access: proxy
+  database: military_sir
+  user: 
+  url: http://{{ range service "influxdb" }}{{ .Address }}:{{ .Port }}{{ end }}
+  jsonData:
+    timeInterval: "15s"
+  secureJsonData:
+    password: 
+
 - name: MilitaryViewAPI
   type: simpod-json-datasource
   access: proxy
