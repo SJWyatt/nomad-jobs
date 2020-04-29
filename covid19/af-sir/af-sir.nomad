@@ -36,11 +36,11 @@ EOH
         volumes = [
           "local/data/census/PEP_2018_PEPAGESEX_with_ann.csv:/root/Data/census/PEP_2018_PEPAGESEX_with_ann.csv",
           "local/data/covid_kaggle/usa_county_wise.csv:/root/Data/covid_kaggle/usa_county_wise.csv",
-          "local/src/dataPreProcess.py:/root/dataPreProcess.py",
-          "local/src/ingest_military.py:/root/ingest_military.py",
-          "local/src/LocationResolver.py:/root/LocationResolver.py",
-          "local/src/sir.py:/root/sir.py",
-          "local/src/sirquery.py:/root/sirquery.py",
+          "local/scripts/dataPreProcess.py:/root/dataPreProcess.py",
+          "local/scripts/ingest_military.py:/root/ingest_military.py",
+          "local/scripts/LocationResolver.py:/root/LocationResolver.py",
+          "local/scripts/sir.py:/root/sir.py",
+          "local/scripts/sirquery.py:/root/sirquery.py",
         ]
 
         command = "/bin/bash"
