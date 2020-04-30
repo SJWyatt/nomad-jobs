@@ -98,7 +98,7 @@ for i in range(rows):
 
 start_storing = time.time()
 # only use data for the next 15 days
-today_date = datetime.today().replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT).strftime("%m/%d/%Y") - timedelta(days=2)
+today_date = (datetime.today().replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT) - timedelta(days=2)).strftime("%m/%d/%Y")
 future_date = (datetime.today().replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT) + timedelta(days=15)).strftime("%m/%d/%Y")
 
 # print("Sir Model:", sir_model[included_dates].head())
