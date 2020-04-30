@@ -52,7 +52,7 @@ EOH
           mode = "bridge"
           port "http" {
             # dev mode
-            static = 5050
+            static = 5051
           }
         }
       }

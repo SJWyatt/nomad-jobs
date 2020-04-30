@@ -12,8 +12,8 @@ import traceback
 import json
 from mapquery import MapQuery
 
-INFLUX_HOST = '172.31.80.76' # os.environ['INFLUX_HOST']
-INFLUX_PORT =  8086 # os.environ['INFLUX_DBPORT']
+INFLUX_HOST = os.environ['INFLUX_HOST']
+INFLUX_PORT = os.environ['INFLUX_DBPORT']
 military_view = MapQuery(INFLUX_HOST, INFLUX_PORT)
 
 class Server_Check:
