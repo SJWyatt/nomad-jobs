@@ -24,15 +24,15 @@ EOH
       
       config {
         image = "xaviermerino/covid-milview:latest"
-        command = "gunicorn"
-        args = [
-          "-b", "0.0.0.0:5050", "map-api:app", "-w", "1"
-        ]
-
-        // command = "/bin/bash"
+        // command = "gunicorn"
         // args = [
-        //   "-c", "while true; do echo 'Waiting...'; sleep 5; done"
+        //   "-b", "0.0.0.0:5050", "map-api:app", "-w", "1"
         // ]
+
+        command = "/bin/bash"
+        args = [
+          "-c", "while true; do echo 'Waiting...'; sleep 5; done"
+        ]
 
         volumes = [
           "local/scripts/map-api.py:/root/map-api.py",
@@ -45,8 +45,8 @@ EOH
       }
 
       resources {
-        cpu = 2000 
-        memory = 1024 
+        cpu = 500 
+        memory = 512 
         network {
           mbits = 100
           mode = "bridge"
