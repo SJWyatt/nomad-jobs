@@ -102,17 +102,31 @@ class SIRQuery:
                 data = self.prev_sir_model['R'].to_list()
                 target_data = self.format_as_timeseries(data, dates, target['target'])
 
+            elif target.get('target') == 'Infected_UB':
+                prev_data = self.prev_sir_model['I'].to_list()
+                data = []
+                for value in prev_data:
+                    data.append(value*1.5)
+                target_data = self.format_as_timeseries(data, dates, target['target'])
+
+            elif target.get('target') == 'Infected_LB':
+                prev_data = self.prev_sir_model['I'].to_list()
+                data = []
+                for value in prev_data:
+                    data.append(value*0.5)
+                target_data = self.format_as_timeseries(data, dates, target['target'])
+
             elif target.get('target') == 'Hospitalization':
                 data = self.prev_sir_model['hospitalization'].to_list()
                 target_data = self.format_as_timeseries(data, dates, target['target'])
-
             elif target.get('target') == 'ICU':
                 data = self.prev_sir_model['icu'].to_list()
                 target_data = self.format_as_timeseries(data, dates, target['target'])
-
             elif target.get('target') == 'Ventilator':
                 data = self.prev_sir_model['ventilator'].to_list()
                 target_data = self.format_as_timeseries(data, dates, target['target'])
+
+
 
             # elif target.get('target') == 'bed-usage':
             #     hosp = self.prev_sir_model['hospitalization'].to_list()

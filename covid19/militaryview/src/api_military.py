@@ -49,6 +49,8 @@ class Search:
         print("/search Endpoint...", flush=True)
         targets = [
             'Infected',
+            'Infected_UB',
+            'Infected_LB',
             'Susceptible',
             'Recovered',
 
@@ -64,6 +66,9 @@ class Search:
             # "icu-usage",
             # "ventilator-usage",
             
+            # "Active",
+            # "Active_Cases",
+
             "R0"
         ]
 
@@ -129,7 +134,21 @@ class Query:
 
                     rtn_data.append(military_data)
 
+                elif target.get('target', '') == "Active_Cases":
+                    geohash_list = military_view.get_nearby_counties(bases, range_to)
+
+
+
                 elif target.get('target', '') in ['Infected', 'Susceptible', 'Recovered']:
+                    if get_all:
+                        sir_data = sir_query.get_target(target, geohash_list="All", range_to=range_to)
+                        rtn_data.append(sir_data)
+                    else:
+                        geohash_list = military_view.get_nearby_counties(bases, range_to)
+                        sir_data = sir_query.get_target(target, geohash_list, range_to)
+                        rtn_data.append(sir_data)
+
+                elif target.get('target', '') in ["Infected_UB", "Infected_LB"]:
                     if get_all:
                         sir_data = sir_query.get_target(target, geohash_list="All", range_to=range_to)
                         rtn_data.append(sir_data)
@@ -146,6 +165,16 @@ class Query:
                         geohash_list = military_view.get_nearby_counties(bases, range_to)
                         sir_data = sir_query.get_target(target, geohash_list, range_to)
                         rtn_data.append(sir_data)
+
+                # elif target.get('target', '') in ['bed-usage', 'icu-usage', 'ventilator-usage']:
+                #     geohash_list = military_view.get_nearby_counties(bases, range_to)
+                #     sir_data = sir_query.get_target(target, geohash_list, range_to)
+                #     rtn_data.append(sir_data)
+
+                # elif target.get('target', '') in ['bed-usage', 'icu-usage', 'ventilator-usage']:
+                #     geohash_list = military_view.get_nearby_counties(bases, range_to)
+                #     sir_data = sir_query.get_target(target, geohash_list, range_to)
+                #     rtn_data.append(sir_data)
 
                 # elif target.get('target', '') in ['bed-usage', 'icu-usage', 'ventilator-usage']:
                 #     geohash_list = military_view.get_nearby_counties(bases, range_to)
