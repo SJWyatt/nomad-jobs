@@ -111,7 +111,7 @@ class SIRQuery:
                 data = []
                 time=0
                 for value in prev_data:
-                    compound_interest = value * (pow((1 + self.interest / 100), time)) 
+                    compound_interest = value * (pow((1 + self.interest), time)) 
                     data.append(compound_interest)
                     time+=1
                 target_data = self.format_as_timeseries(data, dates, target['target'])
@@ -120,7 +120,7 @@ class SIRQuery:
                 data = []
                 time=0
                 for value in prev_data:
-                    compound_interest = value * (pow((1 - self.interest / 100), time)) 
+                    compound_interest = value * (pow((1 - self.interest), time)) 
                     data.append(compound_interest)
                     time+=1
                 target_data = self.format_as_timeseries(data, dates, target['target'])
@@ -140,7 +140,7 @@ class SIRQuery:
                 data = []
                 time=0
                 for value in prev_data:
-                    compound_interest = value * (pow((1 + self.interest / 100), time)) 
+                    compound_interest = value * (pow((1 + self.interest), time)) 
                     data.append(compound_interest)
                     time+=1
                 target_data = self.format_as_timeseries(data, dates, target['target'])
@@ -149,7 +149,7 @@ class SIRQuery:
                 data = []
                 time=0
                 for value in prev_data:
-                    compound_interest = value * (pow((1 - self.interest / 100), time)) 
+                    compound_interest = value * (pow((1 - self.interest), time))
                     data.append(compound_interest)
                     time+=1
                 target_data = self.format_as_timeseries(data, dates, target['target'])
