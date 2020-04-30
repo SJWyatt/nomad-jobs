@@ -98,7 +98,7 @@ for i in range(rows):
 
 start_storing = time.time()
 # only use data for the next 15 days
-today_date = datetime.today().replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT).strftime("%m/%d/%Y")
+today_date = datetime.today().replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT).strftime("%m/%d/%Y") - timedelta(days=2)
 future_date = (datetime.today().replace(hour=23, minute=59, second=59, microsecond=59).replace(tzinfo=GMT) + timedelta(days=15)).strftime("%m/%d/%Y")
 
 # print("Sir Model:", sir_model[included_dates].head())
@@ -118,9 +118,10 @@ for af_base in tqdm(geohash_map, "Getting Bases..."):
             continue
 
         sir_model = sir_query.prev_sir_model
+        R0 = sir_query.prev_R0
 
         try:
-            included_dates = (sir_model['date'] > today_date) & (sir_model['date'] <= future_date)
+            included_dates = (sir_model['date'] >= today_date) & (sir_model['date'] <= future_date)
 
             location_hash = sir_query.location_data['geohashes'].get(county_geohash)
 
@@ -145,6 +146,7 @@ for af_base in tqdm(geohash_map, "Getting Bases..."):
                     measurements_hash[time_loc_hash]['tags']['geohash'] = county_geohash
                     measurements_hash[time_loc_hash]['tags']['fips'] = fips
                     measurements_hash[time_loc_hash]['tags']['base'] = af_base
+                    measurements_hash[time_loc_hash]['tags']['R0'] = R0
 
                     try:
                         measurements_hash[time_loc_hash]['fields']['susceptible'] = int(row['S'])
