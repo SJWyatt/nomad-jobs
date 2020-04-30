@@ -59,9 +59,11 @@ class Search:
             'Deaths',
             # '14d_Prediction_Map',
 
-            "Hospitalization",
-            "ICU",
-            "Ventilator",
+            'Hospitalization',
+            'Hospitalization_UB',
+            'Hospitalization_LB',
+            'ICU',
+            'Ventilator',
 
             # "bed-usage",
             # "icu-usage",
@@ -145,7 +147,7 @@ class Query:
                         sir_data = sir_query.get_target(target, geohash_list, range_to)
                         rtn_data.append(sir_data)
 
-                elif target.get('target', '') in ["Infected_UB", "Infected_LB"]:
+                elif target.get('target', '') in ["Infected_UB", "Infected_LB", 'Hospitalization_UB', 'Hospitalization_LB']:
                     if get_all:
                         sir_data = sir_query.get_target(target, geohash_list="All", range_to=range_to)
                         rtn_data.append(sir_data)
