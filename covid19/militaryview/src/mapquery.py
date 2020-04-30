@@ -108,7 +108,7 @@ class MapQuery:
 
         cases_output = []
         for r in results:
-            time, confirmed, geohash, location, state = r['time'], r['Confirmed'], r['geohash'], r['location'], r['state']
+            time, confirmed, geohash, location, state = r['time'], r['confirmed'], r['geohash'], r['location'], r['state']
             entry = (time, confirmed, geohash, location, state)
             cases_output.append(entry)
 

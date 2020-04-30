@@ -135,8 +135,13 @@ class Query:
                     rtn_data.append(military_data)
 
                 elif target.get('target', '') == "Active":
-                    active_cases = military_view.get_active_cases(bases, range_to, target)
-                    rtn_data.append(active_cases)
+                    try:
+                        active_cases = military_view.get_active_cases(bases, range_to, target)
+                        rtn_data.append(active_cases)
+                    except Exception as e:
+                        print("Exception:", e)
+                        traceback.print_exc()
+                        print("", end='', flush=True)
 
                 elif target.get('target', '') in ['Infected', 'Susceptible', 'Recovered']:
                     if get_all:
