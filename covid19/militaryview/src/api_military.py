@@ -54,6 +54,7 @@ class Search:
             'Susceptible',
             'Recovered',
 
+            "Active",
             'Confirmed',
             'Deaths',
             # '14d_Prediction_Map',
@@ -130,6 +131,10 @@ class Query:
                     military_data['rows'] = military_view.get_military_table_output(bases, range_to, target['target'])
 
                     rtn_data.append(military_data)
+
+                elif target.get('target', '') == "Active":
+                    active_cases = military_view.get_active_cases(bases, range_to, target)
+                    rtn_data.append(active_cases)
 
                 elif target.get('target', '') in ['Infected', 'Susceptible', 'Recovered']:
                     if get_all:

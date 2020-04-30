@@ -2,6 +2,7 @@ from influxdb import InfluxDBClient
 import pygeohash as pgh
 from haversine import haversine, Unit 
 import numpy as np
+from datetime import datetime, timedelta, tzinfo
 
 class MapQuery:
     def __init__(self, influx_host, influx_port):
@@ -34,7 +35,7 @@ class MapQuery:
 
         # Creating time constraints
 
-        query = "SELECT * FROM covid19 WHERE geohash =~ {0} AND time > '{1}' - 1d".format(expanded_geohash, range_to)
+        query = "SELECT * FROM covid19 WHERE geohash =~ {0} AND time > '{1}' - 2d".format(expanded_geohash, range_to)
         print(query)
         results = self.client.query(query).get_points()
 
@@ -82,6 +83,72 @@ class MapQuery:
 
         return table_output
 
+    def get_active_cases(self, bases, range_to, target):
+        self.client.switch_database('covid19')
+        allowed_geohashes = []
+
+        for base_name, geohash_list in self.military_view.items():
+            if base_name in bases:
+                allowed_geohashes.extend(geohash_list)
+        
+        # Creating Regexp for all of the geohashes.
+        expanded_geohash = "/^("
+        for i in range(len(allowed_geohashes)):
+            expanded_geohash = expanded_geohash + allowed_geohashes[i]
+            if i != len(allowed_geohashes) - 1:
+                expanded_geohash = expanded_geohash + "|"
+
+        expanded_geohash = expanded_geohash + ")$/"
+
+        # Creating time constraints
+
+        query = "SELECT * FROM covid19 WHERE geohash =~ {0} AND time > '{1}' - 2d".format(expanded_geohash, range_to)
+        # print(query)
+        results = self.client.query(query).get_points()
+
+        cases_output = []
+        for r in results:
+            time, confirmed, geohash, location, state = r['time'], r['Confirmed'], r['geohash'], r['location'], r['state']
+            entry = (time, confirmed, geohash, location, state)
+            cases_output.append(entry)
+
+        data = []
+        dates = []
+        first_time = datetime.strptime(cases_output[0][0], "%Y-%m-%dT%H:%M:%S.%fZ")
+        ii = 0
+        for time, confirmed, geohash, location, state in cases_output:
+            # ignore the first 14 days
+            if (time - first_time) > timedelta(days=14):
+                data.append(confirmed - cases_output[ii][0])
+                ii+=1
+                dates.append(datetime.strptime(time, "%Y-%m-%dT%H:%M:%S.%fZ").strftime('%m/%d/%Y'))
+            else:
+                data.append(0)
+                dates.append(datetime.strptime(time, "%Y-%m-%dT%H:%M:%S.%fZ").strftime('%m/%d/%Y'))
+
+        return self.format_as_timeseries(data, dates, target)
+
+    def format_as_timeseries(self, sir_data, dates, target):
+        target_data = {
+            'target': target,
+            'datapoints': [],
+            'type': 'timeseries'
+        }
+
+        ii = 0
+        for row in sir_data:
+            date_obj = datetime.strptime(dates[ii], '%m/%d/%Y').replace(hour=23, minute=59, second=59, microsecond=59)
+
+            # if date_obj >= datetime_from and date_obj < datetime_to:
+            target_data['datapoints'].append([row, self.to_epoch(date_obj.strftime("%Y-%m-%dT%H:%M:%S.%fZ"))])
+            
+            ii+=1
+
+        return target_data
+
+    def to_epoch(self, dt_format):
+        epoch = int((datetime.strptime(dt_format, "%Y-%m-%dT%H:%M:%S.%fZ") - datetime(1970, 1, 1)).total_seconds()) * 1000
+        return epoch
 
     def initialize_military_view(self):
         # Getting all geohashes 
