@@ -114,17 +114,17 @@ class MapQuery:
 
         data = []
         dates = []
-        first_time = datetime.strptime(cases_output[0][0], "%Y-%m-%dT%H:%M:%S.%fZ")
+        first_time = datetime.strptime(cases_output[0][0], "%Y-%m-%dT%H:%M:%SZ")
         ii = 0
         for time, confirmed, geohash, location, state in cases_output:
             # ignore the first 14 days
             if (time - first_time) > timedelta(days=14):
                 data.append(confirmed - cases_output[ii][0])
                 ii+=1
-                dates.append(datetime.strptime(time, "%Y-%m-%dT%H:%M:%S.%fZ").strftime('%m/%d/%Y'))
+                dates.append(datetime.strptime(time, "%Y-%m-%dT%H:%M:%SZ").strftime('%m/%d/%Y'))
             else:
                 data.append(0)
-                dates.append(datetime.strptime(time, "%Y-%m-%dT%H:%M:%S.%fZ").strftime('%m/%d/%Y'))
+                dates.append(datetime.strptime(time, "%Y-%m-%dT%H:%M:%SZ").strftime('%m/%d/%Y'))
 
         return self.format_as_timeseries(data, dates, target)
 

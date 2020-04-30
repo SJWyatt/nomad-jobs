@@ -139,7 +139,7 @@ class Query:
                         active_cases = military_view.get_active_cases(bases, range_to, target)
                         rtn_data.append(active_cases)
                     except Exception as e:
-                        print("Exception:", e)
+                        print("Active Cases Exception:", e)
                         traceback.print_exc()
                         print("", end='', flush=True)
 

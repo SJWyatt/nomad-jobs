@@ -56,7 +56,7 @@ class SIRQuery:
                 counties, states = self.geo.get_expanded_counties_and_states(location_hash)
             except Exception as e:
                 print("Cannot get locations, getting old fasioned way...")
-                print("Exception:", e)
+                print("Locations Exception:", e)
                 traceback.print_exc()
                 # print("Recieved:", geohash_list)
                 # print("Locations:", location_hash)
@@ -218,7 +218,7 @@ class SIRQuery:
                 # "tags": ["tag1", "tag2"]
             })
         except Exception as e:
-            print("Exception:", e)
+            print("Peak Infected Exception:", e)
             traceback.print_exc()
             
         return annotations
@@ -335,8 +335,9 @@ class SIRQuery:
             counties, states = self.geo.get_expanded_counties_and_states(location_hash)
         except Exception:
             print("Cannot get locations, getting old fasioned way...", flush=True)
-            # print("Recieved:", geohash_list)
-            # print("Locations:", location_hash)
+            print("Locations Exception:", e)
+            traceback.print_exc()
+            print("",end='', flush=True)
             for loc_hash in location_hash:
                 try:
                     state, county, _, _, _ = self.location_data['locations'][loc_hash]
