@@ -65,9 +65,6 @@ class Search:
             # "bed-usage",
             # "icu-usage",
             # "ventilator-usage",
-            
-            # "Active",
-            # "Active_Cases",
 
             "R0"
         ]
@@ -133,11 +130,6 @@ class Query:
                     military_data['rows'] = military_view.get_military_table_output(bases, range_to, target['target'])
 
                     rtn_data.append(military_data)
-
-                elif target.get('target', '') == "Active_Cases":
-                    geohash_list = military_view.get_nearby_counties(bases, range_to)
-
-
 
                 elif target.get('target', '') in ['Infected', 'Susceptible', 'Recovered']:
                     if get_all:
