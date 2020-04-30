@@ -17,8 +17,8 @@ from sirquery import SIRQuery
 
 print("Initalizing military_view...", flush=True)
 start_init = time.time()
-INFLUX_HOST = '3.235.40.242' #os.environ['INFLUX_HOST']
-INFLUX_PORT = 8086 #os.environ['INFLUX_DBPORT']
+INFLUX_HOST = os.environ['INFLUX_HOST']
+INFLUX_PORT = os.environ['INFLUX_DBPORT']
 military_view = MapQuery(INFLUX_HOST, INFLUX_PORT)
 print(f"Initalized! ({time.time() - start_init:.02f}s)", flush=True)
 
