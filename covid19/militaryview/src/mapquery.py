@@ -120,7 +120,7 @@ class MapQuery:
             the_time = datetime.strptime(time, "%Y-%m-%dT%H:%M:%SZ")
             # ignore the first 14 days
             if (the_time - first_time) > timedelta(days=14):
-                data.append(confirmed - cases_output[ii][0])
+                data.append(confirmed - cases_output[ii][1])
                 ii+=1
                 dates.append(the_time.strftime('%m/%d/%Y'))
             else:
