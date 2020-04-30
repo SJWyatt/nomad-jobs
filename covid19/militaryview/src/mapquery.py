@@ -3,6 +3,7 @@ import pygeohash as pgh
 from haversine import haversine, Unit 
 import numpy as np
 from datetime import datetime, timedelta, tzinfo
+import tqdm as tqdm
 
 class MapQuery:
     def __init__(self, influx_host, influx_port):
@@ -116,7 +117,7 @@ class MapQuery:
         dates = []
         first_time = datetime.strptime(cases_output[0][0], "%Y-%m-%dT%H:%M:%SZ")
         ii = 0
-        for time, confirmed, geohash, location, state in cases_output:
+        for time, confirmed, geohash, location, state in tqdm(cases_output, ""):
             the_time = datetime.strptime(time, "%Y-%m-%dT%H:%M:%SZ")
             # ignore the first 14 days
             if (the_time - first_time) > timedelta(days=14):

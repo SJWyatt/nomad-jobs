@@ -31,6 +31,8 @@ class SIRQuery:
         self.cached_all_model = {}
         self.cached_all_R0 = 0
 
+        self.interest = 0.10
+
         self.initialize()
 
     def get_sir_model(self, geohash_list):
@@ -107,14 +109,20 @@ class SIRQuery:
             elif target.get('target') == 'Infected_UB':
                 prev_data = self.prev_sir_model['I'].to_list()
                 data = []
+                time=0
                 for value in prev_data:
-                    data.append(value*1.05)
+                    compound_interest = value * (pow((1 + self.interest / 100), time)) 
+                    data.append(compound_interest)
+                    time+=1
                 target_data = self.format_as_timeseries(data, dates, target['target'])
             elif target.get('target') == 'Infected_LB':
                 prev_data = self.prev_sir_model['I'].to_list()
                 data = []
+                time=0
                 for value in prev_data:
-                    data.append(value*0.95)
+                    compound_interest = value * (pow((1 - self.interest / 100), time)) 
+                    data.append(compound_interest)
+                    time+=1
                 target_data = self.format_as_timeseries(data, dates, target['target'])
 
             elif target.get('target') == 'Hospitalization':
@@ -130,14 +138,20 @@ class SIRQuery:
             elif target.get('target') == 'Hospitalization_UB':
                 prev_data = self.prev_sir_model['hospitalization'].to_list()
                 data = []
+                time=0
                 for value in prev_data:
-                    data.append(value*1.05)
+                    compound_interest = value * (pow((1 + self.interest / 100), time)) 
+                    data.append(compound_interest)
+                    time+=1
                 target_data = self.format_as_timeseries(data, dates, target['target'])
             elif target.get('target') == 'Hospitalization_LB':
                 prev_data = self.prev_sir_model['hospitalization'].to_list()
                 data = []
+                time=0
                 for value in prev_data:
-                    data.append(value*0.95)
+                    compound_interest = value * (pow((1 - self.interest / 100), time)) 
+                    data.append(compound_interest)
+                    time+=1
                 target_data = self.format_as_timeseries(data, dates, target['target'])
 
             # elif target.get('target') == 'bed-usage':
