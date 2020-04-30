@@ -333,7 +333,7 @@ class SIRQuery:
 
         try:
             counties, states = self.geo.get_expanded_counties_and_states(location_hash)
-        except Exception:
+        except Exception as e:
             print("Cannot get locations, getting old fasioned way...", flush=True)
             print("Locations Exception:", e)
             traceback.print_exc()
