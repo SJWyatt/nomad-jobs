@@ -8,6 +8,7 @@ from datetime import datetime, timedelta, tzinfo
 import numpy as np
 import pandas as pd
 from haversine import Unit, haversine
+from tqdm import tqdm
 
 import geohash2
 from LocationResolver import LocationResolver
@@ -15,12 +16,20 @@ from sir import calculate_sir
 
 
 class SIRQuery:
-    def __init__(self):
+    def __init__(self, military_view):
         # constants
         self.millnames = ['',' K',' Mil',' Bil',' Tril']
 
+        self.military_view = military_view
+
+        self.prev_sir_time = datetime.now()
         self.prev_sir_model = {}
+        self.prev_R0 = 0
         self.prev_location_hash = []
+
+        self.all_cached_time = datetime.now()
+        self.cached_all_model = {}
+        self.cached_all_R0 = 0
 
         self.initialize()
 
@@ -36,7 +45,8 @@ class SIRQuery:
             else: 
                 print("Cannot find", geohash, "in list of known geohashes!")
 
-        if len(location_hash) != 0 and location_hash == self.prev_location_hash:
+        last_cached = datetime.now() - self.prev_sir_time
+        if len(location_hash) != 0 and location_hash == self.prev_location_hash and last_cached < timedelta(days=0.5):
             # reuse previous data
             print("Reusing previous data...")
 
@@ -58,10 +68,11 @@ class SIRQuery:
 
             start_sir = time.time()
             self.prev_sir_model, self.prev_R0 = calculate_sir(counties, states)
+            self.prev_sir_time = datetime.now()
 
             # save location hash for next time.
             self.prev_location_hash = location_hash
-            print(f"INFO: calculate_sir took {time.time() - start_sir:.02f}s")
+            print(f"INFO: calculate_sir took {time.time() - start_sir:.02f}s", flush=True)
 
         else:
             print("Error: No locations found!")
@@ -70,8 +81,11 @@ class SIRQuery:
         # return self.get_target(target, range_to)
 
     def get_target(self, target, geohash_list, range_to):
-        # Load the model for this location
-        self.get_sir_model(geohash_list)
+        if geohash_list != "All":
+            # Load the model for this location
+            self.get_sir_model(geohash_list)
+        else:
+            self.load_all_model()
 
         # format the data for this target
         target_data = {}
@@ -130,10 +144,15 @@ class SIRQuery:
         return target_data
 
     def get_R0(self, target, geohash_list, range_to):
-        self.get_sir_model(geohash_list)
+        if geohash_list != "All":
+            # Load the model for this location
+            self.get_sir_model(geohash_list)
+        else:
+            self.load_all_model()
 
         target_data = {}
         if target.get('type') == 'timeseries' and target.get('target') == 'R0':
+            
             target_data = self.format_as_timeseries([self.prev_R0], [datetime.now().strftime("%m/%d/%Y")], target['target'])
 
         return target_data
@@ -142,18 +161,23 @@ class SIRQuery:
         pass
 
     def get_max_infected(self, geohash_list):
-        self.get_sir_model(geohash_list)
+        if geohash_list != "All":
+            # Load the model for this location
+            self.get_sir_model(geohash_list)
+        else:
+            self.load_all_model()
+        
 
         annotations = []
         try: 
             max_point = self.prev_sir_model['I'].idxmax()
-            print("Max Point:", max_point)
+            # print("Max Point:", max_point)
             
             max_val = self.prev_sir_model['I'].max()
-            print("Max:", max_val)
+            # print("Max:", max_val)
             
             max_time = self.prev_sir_model['date'][max_point]
-            print("Max Time:", max_time)
+            # print("Max Time:", max_time)
             
             date_obj = datetime.strptime(max_time, '%m/%d/%Y').replace(hour=23, minute=59, second=59, microsecond=59)
 
@@ -263,8 +287,42 @@ class SIRQuery:
 
                 self.location_data['locations'][location_hash] = [state, county, country, county_geohash, fips]
 
+    def load_all_model(self):
+        self.prev_sir_model = self.cached_all_model
+        self.prev_R0 = self.cached_all_R0
+        self.prev_location_hash = ["All"]
+        self.prev_sir_time = datetime.now()
+
+    def cache_all_model(self):
+        # get all the counties to run model with.
+        location_hash = []
+        counties = []
+        states = []
+
+        for af_base in tqdm(self.military_view.military_view, "Getting Bases..."):
+            for county_geohash in self.military_view.military_view[af_base]:
+                loc_hash = self.location_data['geohashes'].get(county_geohash)
+                if loc_hash != None and loc_hash not in location_hash:
+                    location_hash.append(loc_hash)
+
+        try:
+            counties, states = self.geo.get_expanded_counties_and_states(location_hash)
+        except Exception:
+            print("Cannot get locations, getting old fasioned way...", flush=True)
+            # print("Recieved:", geohash_list)
+            # print("Locations:", location_hash)
+            for loc_hash in location_hash:
+                try:
+                    state, county, _, _, _ = self.location_data['locations'][loc_hash]
+                    states.append(state)
+                    counties.append(county)
+                except AttributeError:
+                    pass
+
+        self.cached_all_model, self.cached_all_R0 = calculate_sir(counties, states)
+        self.all_cached_time = datetime.now()
+
     def initialize(self):
-        
         current_dir = os.getcwd()
         SIR_FILE_PATH = current_dir+"/Data/sir_model.csv"
         # SIR_FOLDER_PATH = current_dir+"/Data/states/"
@@ -272,7 +330,7 @@ class SIRQuery:
         USAGE_DATA_PATH = current_dir+"/Data/resource_usage.csv"
         STATE_DATA_PATH = current_dir+"/Data/full_state_sir.csv"
 
-        print("Loading SIR .csv's")
+        print("Loading SIR .csv's", flush=True)
         # cache csv data
         self.sir_Data = pd.read_csv(SIR_FILE_PATH, delimiter=',')
         # self.csv_data = None
@@ -280,14 +338,20 @@ class SIRQuery:
         self.state_data = pd.read_csv(STATE_DATA_PATH, delimiter=',')
         self.state_data['date'] = pd.to_datetime(self.state_data['date'])
         self.state_data['date'] = np.asarray([self.to_epoch_mdy(thetime.strftime("%m-%d-%Y")) for thetime in self.state_data['date']])
-        print("Finished!")
+        print("Finished!", flush=True)
 
-        print("Loading State Dict...")
+        print("Loading State Dict...", flush=True)
+        state_dict = time.time()
         # get state data
         self.save_state_data(USA_COUNTY_WISE_PATH)
-        print("Finished!")
+        print(f"Finished! ({time.time() - state_dict:.02f}s)", flush=True)
 
-        print("Loading Geo...")
+        print("Loading Geo...", flush=True)
         # get geo data
         self.geo = LocationResolver()
-        print("Finished!")
+        print("Finished!", flush=True)
+
+        print("PreCaching 'All' Data...", flush=True)
+        precache = time.time()
+        self.cache_all_model()
+        print(f"Precache Finished! ({time.time() - precache:.02f}s)", flush=True)

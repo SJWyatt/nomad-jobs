@@ -9,3 +9,4 @@ pygeohash
 influxdb
 scipy
 matplotlib
+re

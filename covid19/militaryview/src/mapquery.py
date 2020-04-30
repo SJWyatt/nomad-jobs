@@ -15,7 +15,7 @@ class MapQuery:
         self.military_view = self.initialize_military_view()
 
 
-    def get_military_table_output(self, bases, range_to):
+    def get_military_table_output(self, bases, range_to, target="Confirmed"):
         self.client.switch_database('covid19')
         allowed_geohashes = []
 
@@ -40,8 +40,8 @@ class MapQuery:
 
         table_output = []
         for r in results:
-            time, confirmed, geohash, location, state = r['time'], r['confirmed'], r['geohash'], r['location'], r['state']
-            entry = (time, confirmed, geohash, location, state)
+            time, data, geohash, location, state = r['time'], r[target.lower()], r['geohash'], r['location'], r['state']
+            entry = (time, data, geohash, location, state)
             table_output.append(entry)
 
         return table_output
